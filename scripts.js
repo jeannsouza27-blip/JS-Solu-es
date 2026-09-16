@@ -6,42 +6,6 @@ window.addEventListener('load', () => {
   }
 });
 
-// ===== TYPING EFFECT NO HERO =====
-const phrases = [
-  'Desenvolvedor Front-End',
-  'Fundador da JS Soluções',
-  'Especialista em IA'
-];
-
-let phraseIndex = 0;
-let charIndex = 0;
-let isDeleting = false;
-const typingEl = document.getElementById('typing-text');
-
-function type() {
-  if (!typingEl) return;
-  const current = phrases[phraseIndex];
-
-  if (isDeleting) {
-    typingEl.textContent = current.substring(0, charIndex - 1);
-    charIndex--;
-  } else {
-    typingEl.textContent = current.substring(0, charIndex + 1);
-    charIndex++;
-  }
-
-  if (!isDeleting && charIndex === current.length) {
-    setTimeout(() => { isDeleting = true; }, 2000);
-  } else if (isDeleting && charIndex === 0) {
-    isDeleting = false;
-    phraseIndex = (phraseIndex + 1) % phrases.length;
-  }
-
-  setTimeout(type, isDeleting ? 55 : 95);
-}
-
-type();
-
 // ===== ANIMAÇÃO DOS CARDS DE PROJETO AO ENTRAR NA TELA =====
 const cards = document.querySelectorAll('.card');
 
@@ -162,29 +126,76 @@ if (window.matchMedia('(pointer: fine)').matches) {
   });
 }
 
-// ===== CONTADOR ANIMADO DE ESTATÍSTICAS =====
-const statNumbers = document.querySelectorAll('.stat-number');
+// ===== FAQ (acordeão) =====
+const faqItems = document.querySelectorAll('.faq-item');
 
-const statsObserver = new IntersectionObserver((entries) => {
-  entries.forEach(entry => {
-    if (!entry.isIntersecting) return;
-    const el = entry.target;
-    const target = parseInt(el.getAttribute('data-target'), 10) || 0;
-    const duration = 1500;
-    const start = performance.now();
+faqItems.forEach(item => {
+  const question = item.querySelector('.faq-question');
+  if (!question) return;
 
-    function step(now) {
-      const progress = Math.min((now - start) / duration, 1);
-      const eased = 1 - Math.pow(1 - progress, 3);
-      el.textContent = Math.round(eased * target);
-      if (progress < 1) requestAnimationFrame(step);
+  question.addEventListener('click', () => {
+    const isOpen = item.classList.contains('open');
+
+    faqItems.forEach(other => {
+      other.classList.remove('open');
+      other.querySelector('.faq-question')?.setAttribute('aria-expanded', 'false');
+    });
+
+    if (!isOpen) {
+      item.classList.add('open');
+      question.setAttribute('aria-expanded', 'true');
     }
-    requestAnimationFrame(step);
-    statsObserver.unobserve(el);
   });
-}, { threshold: 0.5 });
+});
 
-statNumbers.forEach(el => statsObserver.observe(el));
+// ===== POP-UP DE CAPTURA DE LEAD =====
+const leadPopup = document.getElementById('lead-popup');
+const leadPopupClose = document.getElementById('lead-popup-close');
+const leadPopupForm = document.getElementById('lead-popup-form');
+
+if (leadPopup && leadPopupClose && leadPopupForm) {
+  const LEAD_POPUP_KEY = 'jsSolucoesLeadPopupShown';
+
+  function showLeadPopup() {
+    if (sessionStorage.getItem(LEAD_POPUP_KEY)) return;
+    leadPopup.hidden = false;
+    sessionStorage.setItem(LEAD_POPUP_KEY, '1');
+  }
+
+  function hideLeadPopup() {
+    leadPopup.hidden = true;
+  }
+
+  const popupTimer = setTimeout(showLeadPopup, 30000);
+
+  // Exit-intent: mouse saindo pela borda superior da janela (desktop)
+  document.addEventListener('mouseleave', (e) => {
+    if (e.clientY <= 0) {
+      clearTimeout(popupTimer);
+      showLeadPopup();
+    }
+  });
+
+  leadPopupClose.addEventListener('click', hideLeadPopup);
+  leadPopup.addEventListener('click', (e) => {
+    if (e.target === leadPopup) hideLeadPopup();
+  });
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && !leadPopup.hidden) hideLeadPopup();
+  });
+
+  leadPopupForm.addEventListener('submit', (e) => {
+    e.preventDefault();
+    const name = document.getElementById('lp-name').value.trim();
+    const phone = document.getElementById('lp-phone').value.trim();
+    const text = encodeURIComponent(
+      `Olá! Me chamo ${name} (WhatsApp: ${phone}) e quero receber o diagnóstico gratuito de automação da JS Soluções.`
+    );
+    window.open(`https://wa.me/5527997948088?text=${text}`, '_blank', 'noopener');
+    hideLeadPopup();
+    leadPopupForm.reset();
+  });
+}
 
 // ===== FILTRO DE PROJETOS =====
 const filterBtns = document.querySelectorAll('.filter-btn');
