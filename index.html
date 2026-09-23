@@ -162,7 +162,9 @@
           target="_blank" rel="noopener">Quero uma Consultoria Gratuita</a>
         <a class="btn-secondary" href="#projetos">Ver Nossos Projetos</a>
       </div>
-      <p class="hero-proof">9+ anos de experiência &nbsp;•&nbsp; 50+ projetos entregues &nbsp;•&nbsp; 30+ empresas
+      <!-- TODO JEANN: confirmar números reais (anos de experiência, projetos entregues, empresas atendidas) e ativar removendo data-enabled="false" -->
+      <p class="hero-proof" data-enabled="false">&lt;&lt;NÚMEROS REAIS&gt;&gt; anos de experiência &nbsp;•&nbsp;
+        &lt;&lt;NÚMEROS REAIS&gt;&gt; projetos entregues &nbsp;•&nbsp; &lt;&lt;NÚMEROS REAIS&gt;&gt; empresas
         atendidas</p>
     </div>
     <div class="hero-image">
@@ -375,6 +377,31 @@
             class="card-link">Ver projeto →</a>
         </div>
 
+        <!-- Modelo de card de case — duplique esta estrutura para cada novo case real:
+        <div class="resultado-card" data-aos="fade-up">
+          <span class="card-tag">Categoria &middot; Segmento</span>
+          <h3>Nome do Cliente/Projeto</h3>
+          <div class="resultado-block">
+            <strong>Problema</strong>
+            <p>Descreva o problema real enfrentado pelo cliente.</p>
+          </div>
+          <div class="resultado-block">
+            <strong>Solução</strong>
+            <p>Descreva a solução real entregue.</p>
+          </div>
+          <div class="resultado-numbers">
+            <div><span>+XX%</span>métrica real 1</div>
+            <div><span>-XX%</span>métrica real 2</div>
+            <div><span>XX%</span>métrica real 3</div>
+          </div>
+          <div class="card-techs">
+            <span class="tech-node">Tecnologia 1</span>
+            <span class="tech-automation">Tecnologia 2</span>
+          </div>
+          <a href="<<URL REAL DO PROJETO>>" target="_blank" rel="noopener" class="card-link">Ver projeto →</a>
+        </div>
+        -->
+
         <div class="resultado-card resultado-placeholder" data-aos="fade-up" data-aos-delay="120">
           <span class="card-tag">Próximo case</span>
           <h3>O próximo case de sucesso pode ser da sua empresa</h3>
@@ -388,17 +415,24 @@
     </div>
   </section>
 
-  <section id="depoimentos">
+  <!-- TODO JEANN: adicionar depoimentos reais de clientes (nome, empresa, texto e foto opcional) e depois remover data-enabled="false" abaixo para publicar a seção -->
+  <section id="depoimentos" data-enabled="false">
     <div class="section-container">
       <h2 data-aos="fade-up">O que nossos clientes dizem</h2>
-      <div class="depoimentos-placeholder" data-aos="fade-up">
-        <span class="quote-icon">"</span>
-        <p>Estamos reunindo os relatos dos clientes atendidos pela JS Soluções. Em breve, depoimentos reais
-          aparecerão aqui.</p>
-        <p class="depoimentos-cta-text">É nosso cliente e quer deixar um depoimento? <a
-            href="https://wa.me/5527997948088?text=Ol%C3%A1!%20Sou%20cliente%20da%20JS%20Solu%C3%A7%C3%B5es%20e%20quero%20deixar%20um%20depoimento."
-            target="_blank" rel="noopener">Fale conosco no WhatsApp</a>.</p>
+      <div class="depoimentos-grid" data-aos="fade-up">
+        <!-- Modelo de card — duplique para cada depoimento real:
+        <div class="depoimento-card">
+          <span class="quote-icon">"</span>
+          <img src="./caminho-da-foto.jpg" alt="Nome do Cliente" class="depoimento-foto" loading="lazy">
+          <p class="depoimento-texto">Texto do depoimento do cliente aqui.</p>
+          <p class="depoimento-autor">Nome do Cliente</p>
+          <p class="depoimento-empresa">Empresa / Cargo</p>
+        </div>
+        -->
       </div>
+      <p class="depoimentos-cta-text" data-aos="fade-up">É nosso cliente e quer deixar um depoimento? <a
+          href="https://wa.me/5527997948088?text=Ol%C3%A1!%20Sou%20cliente%20da%20JS%20Solu%C3%A7%C3%B5es%20e%20quero%20deixar%20um%20depoimento."
+          target="_blank" rel="noopener">Fale conosco no WhatsApp</a>.</p>
     </div>
   </section>
 
