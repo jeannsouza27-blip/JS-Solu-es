@@ -939,9 +939,36 @@ section h2::after {
 /* ===== SERVICOS ===== */
 .servicos-grid {
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
+  grid-template-columns: repeat(2, 1fr);
   gap: 22px;
   text-align: left;
+}
+
+.servico-card--secundario {
+  padding: 22px 20px;
+}
+
+.servico-card--secundario .empresa-icon {
+  font-size: 26px;
+  margin-bottom: 10px;
+}
+
+.servico-card--secundario h3 {
+  font-size: 15px;
+}
+
+.servico-card--secundario > p {
+  font-size: 13px;
+  margin-bottom: 10px;
+}
+
+.servico-card--secundario .servico-list {
+  gap: 6px;
+  margin-bottom: 14px;
+}
+
+.servico-card--secundario .servico-list li {
+  font-size: 12px;
 }
 
 .servico-card {
