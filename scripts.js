@@ -5,7 +5,7 @@ const N8N_CHAT_URL = 'https://js-solucoes-n8n-webhook.w49ep4.easypanel.host/webh
 const N8N_FORM_URL = 'https://js-solucoes-n8n-webhook.w49ep4.easypanel.host/webhook/form-site';
 
 // ===== RASTREAMENTO DE EVENTOS (GA4 + Meta Pixel) =====
-const GA4_MEASUREMENT_ID = 'G-XXXXXXXXXX';
+const GA4_MEASUREMENT_ID = 'G-HZCSZM35QD';
 const META_PIXEL_ID = 'XXXXXXXXXXXXXXX';
 const COOKIE_CONSENT_KEY = 'jsSolucoesCookieConsent';
 
@@ -84,6 +84,9 @@ document.querySelectorAll('a[href^="https://wa.me/"]').forEach(link => {
   link.addEventListener('click', () => {
     const origem = link.dataset.origin || 'outro';
     trackEvent('whatsapp_click', { origem });
+    if (typeof window.gtag === 'function') {
+      window.gtag('event', 'contact', { method: 'whatsapp' });
+    }
     if (link.dataset.cta === 'consultoria') {
       trackEvent('cta_consultoria', { origem });
     }
@@ -350,6 +353,9 @@ if (contactForm) {
         contactForm.reset();
         fields.forEach(f => f.closest('.form-group').classList.remove('valid', 'invalid'));
         trackEvent('form_submit', { origem: 'form-site' });
+        if (typeof window.gtag === 'function') {
+          window.gtag('event', 'generate_lead', { method: 'formulario' });
+        }
       } else {
         formFeedback.textContent = (data && data.mensagem) || 'Não foi possível enviar sua mensagem. Tente novamente.';
         formFeedback.className = 'form-feedback error';
