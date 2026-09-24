@@ -5,9 +5,8 @@ const N8N_CHAT_URL = 'https://js-solucoes-n8n-webhook.w49ep4.easypanel.host/webh
 const N8N_FORM_URL = 'https://js-solucoes-n8n-webhook.w49ep4.easypanel.host/webhook/form-site';
 
 // ===== RASTREAMENTO DE EVENTOS (GA4 + Meta Pixel) =====
-// TODO JEANN: substituir pelos IDs reais do GA4 e do Meta Pixel.
-const GA4_MEASUREMENT_ID = '<<G-XXXXXXX>>';
-const META_PIXEL_ID = '<<PIXEL_ID>>';
+const GA4_MEASUREMENT_ID = 'G-SEUID';
+const META_PIXEL_ID = 'SEUPIXELID';
 const COOKIE_CONSENT_KEY = 'jsSolucoesCookieConsent';
 
 function trackEvent(name, params = {}) {
