@@ -126,6 +126,7 @@ if (menuToggle && nav) {
     const isOpen = nav.classList.toggle('open');
     menuToggle.classList.toggle('active', isOpen);
     menuToggle.setAttribute('aria-expanded', String(isOpen));
+    menuToggle.setAttribute('aria-label', isOpen ? 'Fechar menu' : 'Abrir menu');
   });
 
   nav.querySelectorAll('a').forEach(link => {
@@ -133,6 +134,7 @@ if (menuToggle && nav) {
       nav.classList.remove('open');
       menuToggle.classList.remove('active');
       menuToggle.setAttribute('aria-expanded', 'false');
+      menuToggle.setAttribute('aria-label', 'Abrir menu');
     });
   });
 
@@ -141,6 +143,7 @@ if (menuToggle && nav) {
       nav.classList.remove('open');
       menuToggle.classList.remove('active');
       menuToggle.setAttribute('aria-expanded', 'false');
+      menuToggle.setAttribute('aria-label', 'Abrir menu');
     }
   });
 }
