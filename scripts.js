@@ -3,8 +3,8 @@ import { createChat } from 'https://cdn.jsdelivr.net/npm/@n8n/chat/dist/chat.bun
 // ===== CONFIGURAÇÃO N8N (chat de IA e formulário de contato) =====
 // Ambos os webhooks só aceitam requisições de https://jssolucoes.tech e
 // https://www.jssolucoes.tech — em localhost dão erro de CORS (esperado).
-const N8N_CHAT_URL = 'https://js-solucoes-n8n-editor.w49ep4.easypanel.host/webhook/5554e566-8d29-4e0d-b33d-e0219d4bd1a6/chat';
-const N8N_FORM_URL = 'https://js-solucoes-n8n-editor.w49ep4.easypanel.host/webhook/form-site';
+const N8N_CHAT_URL = 'https://js-solucoes-n8n-webhook.w49ep4.easypanel.host/webhook/5554e566-8d29-4e0d-b33d-e0219d4bd1a6/chat';
+const N8N_FORM_URL = 'https://js-solucoes-n8n-webhook.w49ep4.easypanel.host/webhook/form-site';
 
 // ===== RASTREAMENTO DE EVENTOS (GA4 + Meta Pixel) =====
 // TODO JEANN: substituir pelos IDs reais do GA4 e do Meta Pixel.
@@ -440,7 +440,7 @@ if (n8nChatContainer) {
     webhookUrl: N8N_CHAT_URL,
     mode: 'window',
     showWelcomeScreen: false,
-    enableStreaming: true,
+    enableStreaming: false,
     defaultLanguage: 'en',
     initialMessages: [
       'Olá! 👋 Sou a Ana, assistente virtual da JS Soluções.',
