@@ -440,6 +440,12 @@ header.scrolled {
   background: transparent;
 }
 
+button.btn-primary,
+button.btn-secondary {
+  font-family: inherit;
+  cursor: pointer;
+}
+
 .btn-secondary:hover {
   background-color: rgba(56, 189, 248, 0.1);
   transform: translateY(-2px);
@@ -1827,9 +1833,10 @@ footer {
 }
 
 /* ===== AÇÕES FLUTUANTES ===== */
+/* bottom fica acima do botão do widget de chat (n8n), para não sobrepor */
 .floating-actions {
   position: fixed;
-  bottom: 28px;
+  bottom: 104px;
   right: 28px;
   display: flex;
   flex-direction: column;
@@ -1921,6 +1928,50 @@ footer {
 @media (pointer: coarse) {
   .whatsapp-tooltip {
     display: none;
+  }
+}
+
+/* ===== WIDGET DE CHAT (n8n) =====
+   Variáveis do @n8n/chat, alinhadas à identidade visual do site.
+   Posição (bottom/right/toggle--size) é calculada para o botão do
+   WhatsApp (.floating-actions) sempre ficar acima do toggle do chat. */
+#n8n-chat {
+  --chat--color--primary: var(--accent);
+  --chat--color--primary-shade-50: var(--accent-dark);
+  --chat--color--primary--shade-100: #0284c7;
+  --chat--color--secondary: var(--accent-purple);
+  --chat--color-secondary-shade-50: #6366f1;
+  --chat--color-dark: var(--bg);
+  --chat--color-light: var(--bg-card);
+  --chat--color-light-shade-50: #24314a;
+  --chat--color-light-shade-100: var(--border);
+  --chat--color-medium: var(--text-muted);
+  --chat--color-white: var(--text);
+  --chat--color-typing: var(--accent);
+  --chat--border-radius: 14px;
+  --chat--body--background: var(--bg-card);
+  --chat--header--background: var(--gradient);
+  --chat--header--color: #ffffff;
+  --chat--message--bot--background: var(--bg-alt);
+  --chat--message--bot--color: var(--text);
+  --chat--message--user--background: var(--accent);
+  --chat--message--user--color: #ffffff;
+  --chat--input--border-active: var(--accent);
+  --chat--window--border: 1px solid var(--border);
+  --chat--window--width: 380px;
+  --chat--window--right: 28px;
+  --chat--window--bottom: 28px;
+  --chat--toggle--background: var(--gradient);
+  --chat--toggle--hover--background: var(--accent-dark);
+  --chat--toggle--color: #ffffff;
+  --chat--toggle--size: 60px;
+}
+
+@media (max-width: 768px) {
+  #n8n-chat {
+    --chat--window--right: 18px;
+    --chat--window--bottom: 18px;
+    --chat--toggle--size: 52px;
   }
 }
 
@@ -2160,7 +2211,7 @@ footer {
   }
 
   .floating-actions {
-    bottom: 18px;
+    bottom: 80px;
     right: 18px;
     gap: 10px;
   }

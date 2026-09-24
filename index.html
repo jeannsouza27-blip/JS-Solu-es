@@ -32,6 +32,9 @@
   <!-- AOS (Animate On Scroll) -->
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/aos@2.3.1/dist/aos.css">
 
+  <!-- Widget de chat com o agente de IA (n8n) -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@n8n/chat/dist/style.css">
+
   <link rel="stylesheet" href="./styles.css">
 
   <!-- Schema.org — LocalBusiness + Service + FAQ -->
@@ -161,6 +164,7 @@
           href="https://wa.me/5527997948088?text=Ol%C3%A1!%20Vi%20o%20site%20da%20JS%20Solu%C3%A7%C3%B5es%20e%20gostaria%20de%20agendar%20uma%20consultoria%20gratuita."
           target="_blank" rel="noopener">Quero uma Consultoria Gratuita</a>
         <a class="btn-secondary" href="#projetos">Ver Nossos Projetos</a>
+        <button type="button" class="btn-secondary" id="open-chat-cta">Converse com nossa IA agora</button>
       </div>
       <!-- TODO JEANN: confirmar números reais (anos de experiência, projetos entregues, empresas atendidas) e ativar removendo data-enabled="false" -->
       <p class="hero-proof" data-enabled="false">&lt;&lt;NÚMEROS REAIS&gt;&gt; anos de experiência &nbsp;•&nbsp;
@@ -811,6 +815,9 @@
     </a>
   </div>
 
+  <!-- Widget de chat com o agente de IA (n8n) -->
+  <div id="n8n-chat"></div>
+
   <!-- Pop-up de captura de lead -->
   <div id="lead-popup" class="lead-popup" hidden>
     <div class="lead-popup-box">
@@ -828,7 +835,7 @@
   <!-- CDNs: scroll-reveal e tilt 3D (partículas são carregadas sob demanda em scripts.js) -->
   <script src="https://cdn.jsdelivr.net/npm/aos@2.3.1/dist/aos.js" defer></script>
   <script src="https://cdn.jsdelivr.net/npm/vanilla-tilt@1.7.0/dist/vanilla-tilt.min.js" defer></script>
-  <script src="./scripts.js" defer></script>
+  <script src="./scripts.js" type="module"></script>
 </body>
 
 </html>

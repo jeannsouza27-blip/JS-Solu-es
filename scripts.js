@@ -1,3 +1,11 @@
+import { createChat } from 'https://cdn.jsdelivr.net/npm/@n8n/chat/dist/chat.bundle.es.js';
+
+// ===== CONFIGURAÇÃO N8N (chat de IA e formulário de contato) =====
+// Ambos os webhooks só aceitam requisições de https://jssolucoes.tech e
+// https://www.jssolucoes.tech — em localhost dão erro de CORS (esperado).
+const N8N_CHAT_URL = 'https://js-solucoes-n8n-editor.w49ep4.easypanel.host/webhook/5554e566-8d29-4e0d-b33d-e0219d4bd1a6/chat';
+const N8N_FORM_URL = 'https://js-solucoes-n8n-editor.w49ep4.easypanel.host/webhook/form-site';
+
 // ===== PRELOADER =====
 window.addEventListener('load', () => {
   const preloader = document.getElementById('preloader');
@@ -279,6 +287,50 @@ if (contactForm) {
       setTimeout(() => ripple.remove(), 600);
     });
   }
+}
+
+// ===== WIDGET DE CHAT COM O AGENTE DE IA (n8n) =====
+const n8nChatContainer = document.getElementById('n8n-chat');
+
+if (n8nChatContainer) {
+  createChat({
+    webhookUrl: N8N_CHAT_URL,
+    mode: 'window',
+    showWelcomeScreen: false,
+    enableStreaming: true,
+    defaultLanguage: 'en',
+    initialMessages: [
+      'Olá! 👋 Sou a Ana, assistente virtual da JS Soluções.',
+      'Me conta: qual o ramo da sua empresa e o que você gostaria de automatizar?'
+    ],
+    i18n: {
+      en: {
+        title: 'Ana • JS Soluções',
+        subtitle: 'Respondo na hora, 24h por dia',
+        inputPlaceholder: 'Digite sua mensagem...',
+        getStarted: 'Nova conversa',
+        footer: '',
+        closeButtonTooltip: 'Fechar'
+      }
+    }
+  });
+}
+
+// Abre o widget programaticamente. O @n8n/chat (v1.39) não expõe uma API
+// pública de abrir/fechar — clicamos no botão flutuante que ele mesmo
+// renderiza. Se uma versão futura do pacote mudar essas classes, isso
+// para de funcionar e precisa ser revisto.
+function openN8nChat() {
+  const toggle = document.querySelector('#n8n-chat .chat-window-toggle');
+  if (!toggle) return;
+  const panel = document.querySelector('#n8n-chat .chat-window');
+  const isOpen = panel && getComputedStyle(panel).display !== 'none';
+  if (!isOpen) toggle.click();
+}
+
+const openChatCta = document.getElementById('open-chat-cta');
+if (openChatCta) {
+  openChatCta.addEventListener('click', openN8nChat);
 }
 
 // ===== BIBLIOTECAS EXTERNAS (guardas para caso o CDN falhe) =====
