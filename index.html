@@ -30,7 +30,7 @@
     rel="stylesheet">
 
   <!-- AOS (Animate On Scroll) -->
-  <link rel="stylesheet" href="https://unpkg.com/aos@2.3.1/dist/aos.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/aos@2.3.1/dist/aos.css">
 
   <link rel="stylesheet" href="./styles.css">
 
@@ -115,7 +115,7 @@
 
   <!-- Preloader -->
   <div id="preloader">
-    <img src="./js-solucoes-logo.svg" alt="JS Soluções" class="preloader-logo">
+    <img src="./js-solucoes-logo.svg" alt="JS Soluções" class="preloader-logo" width="238" height="60">
     <div class="preloader-bar"><span></span></div>
   </div>
 
@@ -128,7 +128,7 @@
 
   <header id="site-header">
     <a href="#home" class="logo">
-      <img src="./js-solucoes-logo.svg" alt="JS Soluções" class="logo-img">
+      <img src="./js-solucoes-logo.svg" alt="JS Soluções" class="logo-img" width="158" height="40">
     </a>
     <nav id="nav-menu">
       <a href="#home">Início</a>
@@ -587,8 +587,14 @@
         </div>
         <div class="sobre-photo" data-aos="fade-up" data-aos-delay="150">
           <div class="image-ring">
+            <!-- TODO JEANN: gerar uma versão .webp desta foto (ex: via squoosh.app) e trocar por:
+            <picture>
+              <source srcset="./caminho-da-foto.webp" type="image/webp">
+              <img src="./WhatsApp Image 2026-03-20 at 06.41.38.jpeg" alt="Jeann Souza, fundador da JS Soluções" class="profile-img" width="270" height="270" loading="lazy">
+            </picture>
+            -->
             <img src="./WhatsApp Image 2026-03-20 at 06.41.38.jpeg" alt="Jeann Souza, fundador da JS Soluções"
-              class="profile-img">
+              class="profile-img" width="270" height="270" loading="lazy">
           </div>
           <p class="sobre-nome">Jeann Souza</p>
           <p class="sobre-cargo">Fundador • Especialista em Agentes de IA e n8n</p>
@@ -765,7 +771,8 @@
     <div class="footer-inner">
       <div class="footer-top">
         <div class="footer-brand">
-          <img src="./js-solucoes-logo.svg" alt="JS Soluções" class="footer-logo-img" loading="lazy">
+          <img src="./js-solucoes-logo.svg" alt="JS Soluções" class="footer-logo-img" loading="lazy" width="135"
+            height="34">
           <p>Agentes de IA, automação e desenvolvimento web para empresas que querem crescer.</p>
         </div>
         <nav class="footer-nav">
@@ -818,11 +825,10 @@
     </div>
   </div>
 
-  <!-- CDNs: partículas, scroll-reveal e tilt 3D -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/particles.js/2.0.0/particles.min.js"></script>
-  <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/vanilla-tilt@1.7.0/dist/vanilla-tilt.min.js"></script>
-  <script src="./scripts.js"></script>
+  <!-- CDNs: scroll-reveal e tilt 3D (partículas são carregadas sob demanda em scripts.js) -->
+  <script src="https://cdn.jsdelivr.net/npm/aos@2.3.1/dist/aos.js" defer></script>
+  <script src="https://cdn.jsdelivr.net/npm/vanilla-tilt@1.7.0/dist/vanilla-tilt.min.js" defer></script>
+  <script src="./scripts.js" defer></script>
 </body>
 
 </html>

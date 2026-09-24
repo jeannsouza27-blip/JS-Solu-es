@@ -290,22 +290,33 @@ if (typeof VanillaTilt !== 'undefined') {
   VanillaTilt.init(document.querySelectorAll('[data-tilt]'));
 }
 
-if (typeof particlesJS !== 'undefined' && document.getElementById('particles-js')) {
-  particlesJS('particles-js', {
-    particles: {
-      number: { value: 55, density: { enable: true, value_area: 900 } },
-      color: { value: '#38bdf8' },
-      shape: { type: 'circle' },
-      opacity: { value: 0.5, random: true },
-      size: { value: 3, random: true },
-      line_linked: { enable: true, distance: 140, color: '#38bdf8', opacity: 0.25, width: 1 },
-      move: { enable: true, speed: 1.1, direction: 'none', random: true, out_mode: 'out' }
-    },
-    interactivity: {
-      detect_on: 'canvas',
-      events: { onhover: { enable: true, mode: 'grab' }, onclick: { enable: false }, resize: true },
-      modes: { grab: { distance: 160, line_linked: { opacity: 0.5 } } }
-    },
-    retina_detect: true
-  });
+// ===== PARTICLES.JS — carregado sob demanda, só em desktop e sem prefers-reduced-motion =====
+const particlesContainer = document.getElementById('particles-js');
+const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+const isMobileViewport = window.matchMedia('(max-width: 767px)').matches;
+
+if (particlesContainer && !prefersReducedMotion && !isMobileViewport) {
+  const particlesScript = document.createElement('script');
+  particlesScript.src = 'https://cdnjs.cloudflare.com/ajax/libs/particles.js/2.0.0/particles.min.js';
+  particlesScript.onload = () => {
+    if (typeof particlesJS === 'undefined') return;
+    particlesJS('particles-js', {
+      particles: {
+        number: { value: 55, density: { enable: true, value_area: 900 } },
+        color: { value: '#38bdf8' },
+        shape: { type: 'circle' },
+        opacity: { value: 0.5, random: true },
+        size: { value: 3, random: true },
+        line_linked: { enable: true, distance: 140, color: '#38bdf8', opacity: 0.25, width: 1 },
+        move: { enable: true, speed: 1.1, direction: 'none', random: true, out_mode: 'out' }
+      },
+      interactivity: {
+        detect_on: 'canvas',
+        events: { onhover: { enable: true, mode: 'grab' }, onclick: { enable: false }, resize: true },
+        modes: { grab: { distance: 160, line_linked: { opacity: 0.5 } } }
+      },
+      retina_detect: true
+    });
+  };
+  document.body.appendChild(particlesScript);
 }
