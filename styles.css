@@ -1862,7 +1862,7 @@ footer {
 /* bottom fica acima do botão do widget de chat (n8n), para não sobrepor */
 .floating-actions {
   position: fixed;
-  bottom: 104px;
+  bottom: 102px;
   right: 28px;
   display: flex;
   flex-direction: column;
@@ -1929,7 +1929,13 @@ footer {
   --chat--toggle--background: var(--gradient-btn);
   --chat--toggle--hover--background: #075985;
   --chat--toggle--color: #ffffff;
+  /* --chat--toggle--width/height (o que o botão realmente usa) já vêm
+     "congelados" em 64px no :root da lib, então --chat--toggle--size
+     sozinho não muda o tamanho renderizado — é preciso sobrescrever
+     width/height também. */
   --chat--toggle--size: 60px;
+  --chat--toggle--width: 60px;
+  --chat--toggle--height: 60px;
 }
 
 @media (max-width: 768px) {
@@ -1937,6 +1943,8 @@ footer {
     --chat--window--right: 18px;
     --chat--window--bottom: 18px;
     --chat--toggle--size: 52px;
+    --chat--toggle--width: 52px;
+    --chat--toggle--height: 52px;
   }
 }
 
@@ -1959,6 +1967,13 @@ footer {
   justify-content: space-between;
   box-shadow: 0 12px 32px rgba(0, 0, 0, 0.35);
   z-index: 1000;
+}
+
+/* display:flex acima tem a mesma especificidade do [hidden] do
+   navegador e, por ser CSS de autor, vence — sem isso o banner nunca
+   some de fato depois de aceitar/recusar. */
+.cookie-consent[hidden] {
+  display: none;
 }
 
 .cookie-consent p {
@@ -2141,11 +2156,11 @@ footer {
   }
 }
 
-.ana-teaser{position:fixed;right:24px;bottom:100px;z-index:9999;max-width:270px;padding:14px 34px 14px 16px;border-radius:14px 14px 4px 14px;background:#1a2233;border:1px solid rgba(99,102,241,.45);color:#e5e7eb;font-size:14px;line-height:1.45;box-shadow:0 12px 30px rgba(0,0,0,.45);cursor:pointer;animation:anaTeaserIn .35s ease-out}
+.ana-teaser{position:fixed;right:100px;bottom:32px;z-index:9999;max-width:270px;padding:14px 34px 14px 16px;border-radius:14px 14px 4px 14px;background:#1a2233;border:1px solid rgba(99,102,241,.45);color:#e5e7eb;font-size:14px;line-height:1.45;box-shadow:0 12px 30px rgba(0,0,0,.45);cursor:pointer;animation:anaTeaserIn .35s ease-out}
 .ana-teaser strong{display:block;font-size:13px;color:#93c5fd;margin-bottom:4px}
 .ana-teaser p{margin:0}
 .ana-teaser-close{position:absolute;top:6px;right:8px;background:none;border:0;color:#9ca3af;font-size:18px;line-height:1;cursor:pointer}
 .ana-teaser-close:hover{color:#fff}
 @keyframes anaTeaserIn{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
-@media (max-width:480px){.ana-teaser{right:16px;left:16px;max-width:none;bottom:90px}}
+@media (max-width:480px){.ana-teaser{left:16px;right:88px;bottom:28px;max-width:none}}
 @media (prefers-reduced-motion:reduce){.ana-teaser{animation:none}}

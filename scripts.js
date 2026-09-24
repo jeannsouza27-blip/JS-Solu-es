@@ -510,6 +510,14 @@ if (particlesContainer && !prefersReducedMotion && !isMobileViewport) {
   function showTeaser() {
     const toggle = document.querySelector('#n8n-chat .chat-window-toggle');
     if (!toggle || chatIsOpen()) return;
+    // O banner de cookies ocupa quase a largura toda no mobile: espera ele
+    // ser fechado (aceitar/recusar) antes de mostrar o balão, pra não
+    // sobrepor os botões do banner.
+    const cookieBanner = document.getElementById('cookie-consent');
+    if (cookieBanner && !cookieBanner.hidden) {
+      setTimeout(showTeaser, 1000);
+      return;
+    }
     try { sessionStorage.setItem(KEY, '1'); } catch (e) {}
     const teaser = document.createElement('div');
     teaser.className = 'ana-teaser';
