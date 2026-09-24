@@ -762,8 +762,16 @@
           <label for="cf-email">E-mail</label>
         </div>
         <div class="form-group">
+          <input type="tel" id="cf-whatsapp" name="whatsapp" placeholder=" " autocomplete="tel">
+          <label for="cf-whatsapp">WhatsApp (opcional)</label>
+        </div>
+        <div class="form-group">
           <textarea id="cf-message" name="message" rows="5" placeholder=" " required></textarea>
           <label for="cf-message">Mensagem</label>
+        </div>
+        <div class="form-group-honeypot" aria-hidden="true">
+          <label for="cf-website">Não preencha este campo</label>
+          <input type="text" id="cf-website" name="website" tabindex="-1" autocomplete="off" aria-hidden="true">
         </div>
         <button type="submit" class="btn-primary btn-submit"><span>Enviar Mensagem</span></button>
         <p class="form-feedback" id="form-feedback" role="status" aria-live="polite"></p>

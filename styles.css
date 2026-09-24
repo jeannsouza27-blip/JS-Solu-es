@@ -1718,6 +1718,21 @@ section h2::after {
   font-family: inherit;
 }
 
+.btn-submit:disabled {
+  opacity: 0.65;
+  cursor: not-allowed;
+}
+
+/* Honeypot anti-spam: escondido fora da tela, mas presente no DOM/tab order controlado */
+.form-group-honeypot {
+  position: absolute;
+  left: -9999px;
+  top: -9999px;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+}
+
 .ripple {
   position: absolute;
   border-radius: 50%;

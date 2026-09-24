@@ -6,6 +6,12 @@ import { createChat } from 'https://cdn.jsdelivr.net/npm/@n8n/chat/dist/chat.bun
 const N8N_CHAT_URL = 'https://js-solucoes-n8n-editor.w49ep4.easypanel.host/webhook/5554e566-8d29-4e0d-b33d-e0219d4bd1a6/chat';
 const N8N_FORM_URL = 'https://js-solucoes-n8n-editor.w49ep4.easypanel.host/webhook/form-site';
 
+// ===== RASTREAMENTO DE EVENTOS =====
+// Placeholder até a Tarefa 6 conectar GA4/Meta Pixel de verdade.
+function trackEvent(name, params = {}) {
+  console.debug('[trackEvent]', name, params);
+}
+
 // ===== PRELOADER =====
 window.addEventListener('load', () => {
   const preloader = document.getElementById('preloader');
@@ -228,6 +234,13 @@ const formFeedback = document.getElementById('form-feedback');
 
 function validateField(input) {
   const group = input.closest('.form-group');
+
+  // Campos opcionais (ex: WhatsApp) não ficam marcados como inválidos vazios
+  if (!input.required) {
+    group.classList.remove('invalid');
+    return true;
+  }
+
   let valid = input.value.trim() !== '';
 
   if (input.type === 'email' && valid) {
@@ -240,17 +253,24 @@ function validateField(input) {
 }
 
 if (contactForm) {
-  const fields = contactForm.querySelectorAll('input, textarea');
+  // O honeypot fica fora da validação/interação normal do formulário
+  const fields = contactForm.querySelectorAll('input:not([name="website"]), textarea');
   fields.forEach(field => {
     field.addEventListener('blur', () => validateField(field));
   });
 
-  contactForm.addEventListener('submit', (e) => {
+  const submitBtn = contactForm.querySelector('.btn-submit');
+  const submitBtnLabel = submitBtn ? submitBtn.querySelector('span') : null;
+  const FORM_TIMEOUT_MS = 10000;
+
+  contactForm.addEventListener('submit', async (e) => {
     e.preventDefault();
 
     const name = document.getElementById('cf-name');
     const email = document.getElementById('cf-email');
+    const whatsapp = document.getElementById('cf-whatsapp');
     const message = document.getElementById('cf-message');
+    const website = document.getElementById('cf-website');
     const allValid = [name, email, message].map(validateField).every(Boolean);
 
     if (!allValid) {
@@ -259,21 +279,60 @@ if (contactForm) {
       return;
     }
 
-    // Sem backend próprio: abre o cliente de e-mail com os dados preenchidos
-    const subject = encodeURIComponent(`Contato via site — ${name.value.trim()}`);
-    const body = encodeURIComponent(
-      `Nome: ${name.value.trim()}\nE-mail: ${email.value.trim()}\n\nMensagem:\n${message.value.trim()}`
-    );
-    window.location.href = `mailto:jeannsouza27@gmail.com?subject=${subject}&body=${body}`;
+    if (website && website.value.trim() !== '') {
+      // Honeypot preenchido: provável bot. Finge sucesso sem enviar nada ao n8n.
+      formFeedback.textContent = 'Recebemos! Respondemos em até 24h úteis.';
+      formFeedback.className = 'form-feedback success';
+      contactForm.reset();
+      return;
+    }
 
-    formFeedback.textContent = 'Abrindo seu cliente de e-mail para enviar a mensagem...';
-    formFeedback.className = 'form-feedback success';
-    contactForm.reset();
-    fields.forEach(f => f.closest('.form-group').classList.remove('valid', 'invalid'));
+    if (submitBtn) submitBtn.disabled = true;
+    if (submitBtnLabel) submitBtnLabel.textContent = 'Enviando...';
+    formFeedback.textContent = '';
+    formFeedback.className = 'form-feedback';
+
+    const controller = new AbortController();
+    const timeoutId = setTimeout(() => controller.abort(), FORM_TIMEOUT_MS);
+
+    try {
+      const response = await fetch(N8N_FORM_URL, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          nome: name.value.trim(),
+          email: email.value.trim(),
+          whatsapp: whatsapp ? whatsapp.value.trim() : '',
+          mensagem: message.value.trim(),
+          origem: 'form-site',
+          website: website ? website.value : ''
+        }),
+        signal: controller.signal
+      });
+
+      const data = await response.json().catch(() => null);
+
+      if (data && data.ok) {
+        formFeedback.textContent = data.mensagem || 'Recebemos! Respondemos em até 24h úteis.';
+        formFeedback.className = 'form-feedback success';
+        contactForm.reset();
+        fields.forEach(f => f.closest('.form-group').classList.remove('valid', 'invalid'));
+        trackEvent('form_submit', { origem: 'form-site' });
+      } else {
+        formFeedback.textContent = (data && data.mensagem) || 'Não foi possível enviar sua mensagem. Tente novamente.';
+        formFeedback.className = 'form-feedback error';
+      }
+    } catch (error) {
+      formFeedback.textContent = 'Não foi possível enviar. Chame no WhatsApp (27) 99794-8088.';
+      formFeedback.className = 'form-feedback error';
+    } finally {
+      clearTimeout(timeoutId);
+      if (submitBtn) submitBtn.disabled = false;
+      if (submitBtnLabel) submitBtnLabel.textContent = 'Enviar Mensagem';
+    }
   });
 
   // Efeito ripple no botão de enviar
-  const submitBtn = contactForm.querySelector('.btn-submit');
   if (submitBtn) {
     submitBtn.addEventListener('click', function (e) {
       const rect = this.getBoundingClientRect();
