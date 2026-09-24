@@ -244,56 +244,6 @@ faqItems.forEach(item => {
   });
 });
 
-// ===== POP-UP DE CAPTURA DE LEAD =====
-const leadPopup = document.getElementById('lead-popup');
-const leadPopupClose = document.getElementById('lead-popup-close');
-const leadPopupForm = document.getElementById('lead-popup-form');
-
-if (leadPopup && leadPopupClose && leadPopupForm) {
-  const LEAD_POPUP_KEY = 'jsSolucoesLeadPopupShown';
-
-  function showLeadPopup() {
-    if (sessionStorage.getItem(LEAD_POPUP_KEY)) return;
-    leadPopup.hidden = false;
-    sessionStorage.setItem(LEAD_POPUP_KEY, '1');
-  }
-
-  function hideLeadPopup() {
-    leadPopup.hidden = true;
-  }
-
-  const popupTimer = setTimeout(showLeadPopup, 30000);
-
-  // Exit-intent: mouse saindo pela borda superior da janela (desktop)
-  document.addEventListener('mouseleave', (e) => {
-    if (e.clientY <= 0) {
-      clearTimeout(popupTimer);
-      showLeadPopup();
-    }
-  });
-
-  leadPopupClose.addEventListener('click', hideLeadPopup);
-  leadPopup.addEventListener('click', (e) => {
-    if (e.target === leadPopup) hideLeadPopup();
-  });
-  document.addEventListener('keydown', (e) => {
-    if (e.key === 'Escape' && !leadPopup.hidden) hideLeadPopup();
-  });
-
-  leadPopupForm.addEventListener('submit', (e) => {
-    e.preventDefault();
-    const name = document.getElementById('lp-name').value.trim();
-    const phone = document.getElementById('lp-phone').value.trim();
-    const text = encodeURIComponent(
-      `Olá! Me chamo ${name} (WhatsApp: ${phone}) e quero receber o diagnóstico gratuito de automação da JS Soluções.`
-    );
-    window.open(`https://wa.me/5527997948088?text=${text}`, '_blank', 'noopener');
-    trackEvent('whatsapp_click', { origem: 'lead_popup' });
-    hideLeadPopup();
-    leadPopupForm.reset();
-  });
-}
-
 // ===== FILTRO DE PROJETOS =====
 const filterBtns = document.querySelectorAll('.filter-btn');
 const projectCards = document.querySelectorAll('.projects .card');
@@ -448,8 +398,8 @@ if (n8nChatContainer) {
         enableStreaming: false,
         defaultLanguage: 'en',
         initialMessages: [
-          'Olá! 👋 Sou a Ana, assistente virtual da JS Soluções.',
-          'Me conta: qual o ramo da sua empresa e o que você gostaria de automatizar?'
+          'Olá! 👋 Sou a Ana, da JS Soluções.',
+          'Posso fazer um diagnóstico gratuito de como a IA pode reduzir custos na sua empresa. Qual o ramo do seu negócio?'
         ],
         i18n: {
           en: {
@@ -543,3 +493,45 @@ if (particlesContainer && !prefersReducedMotion && !isMobileViewport) {
   };
   document.body.appendChild(particlesScript);
 }
+
+// ===== CONVITE PROATIVO DA ANA (substitui o popup) =====
+(function () {
+  const KEY = 'jsAnaTeaserShown';
+  const DELAY_MS = 8000;
+  try { if (sessionStorage.getItem(KEY)) return; } catch (e) {}
+  function chatIsOpen() {
+    const panel = document.querySelector('#n8n-chat .chat-window');
+    return panel && getComputedStyle(panel).display !== 'none';
+  }
+  const timer = setTimeout(showTeaser, DELAY_MS);
+  document.addEventListener('click', (e) => {
+    if (e.target.closest('#n8n-chat .chat-window-toggle')) clearTimeout(timer);
+  }, true);
+  function showTeaser() {
+    const toggle = document.querySelector('#n8n-chat .chat-window-toggle');
+    if (!toggle || chatIsOpen()) return;
+    try { sessionStorage.setItem(KEY, '1'); } catch (e) {}
+    const teaser = document.createElement('div');
+    teaser.className = 'ana-teaser';
+    teaser.setAttribute('role', 'button');
+    teaser.tabIndex = 0;
+    teaser.innerHTML =
+      '<button type="button" class="ana-teaser-close" aria-label="Fechar">×</button>' +
+      '<strong>Ana • JS Soluções</strong>' +
+      '<p>Quer um diagnóstico gratuito de como a IA pode reduzir custos na sua empresa? Posso te ajudar agora 👋</p>';
+    document.body.appendChild(teaser);
+    if (typeof trackEvent === 'function') trackEvent('ana_teaser_view');
+    const close = () => teaser.remove();
+    const openChat = () => {
+      close();
+      if (!chatIsOpen()) toggle.click();
+      if (typeof trackEvent === 'function') trackEvent('ana_teaser_click');
+    };
+    teaser.querySelector('.ana-teaser-close').addEventListener('click', (e) => { e.stopPropagation(); close(); });
+    teaser.addEventListener('click', openChat);
+    teaser.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); openChat(); }
+    });
+    toggle.addEventListener('click', close, { once: true });
+  }
+})();

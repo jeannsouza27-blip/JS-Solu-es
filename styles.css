@@ -1898,69 +1898,8 @@ footer {
   border-color: var(--accent);
 }
 
-#whatsapp-float {
-  position: relative;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 56px;
-  height: 56px;
-  border-radius: 50%;
-  background: #25d366;
-  box-shadow: 0 8px 24px rgba(37, 211, 102, 0.4);
-  transition: transform 0.25s ease, box-shadow 0.25s ease;
-  animation: whatsappPulse 2.6s ease-in-out infinite;
-}
-
-#whatsapp-float svg {
-  width: 28px;
-  height: 28px;
-  color: #fff;
-}
-
-#whatsapp-float:hover {
-  transform: scale(1.08);
-  box-shadow: 0 10px 28px rgba(37, 211, 102, 0.55);
-}
-
-@keyframes whatsappPulse {
-  0%, 100% { box-shadow: 0 0 0 0 rgba(37, 211, 102, 0.45), 0 8px 24px rgba(37, 211, 102, 0.4); }
-  50% { box-shadow: 0 0 0 12px rgba(37, 211, 102, 0), 0 8px 24px rgba(37, 211, 102, 0.4); }
-}
-
-.whatsapp-tooltip {
-  position: absolute;
-  right: 66px;
-  top: 50%;
-  transform: translateY(-50%) translateX(6px);
-  background: var(--bg-card);
-  border: 1px solid var(--border);
-  color: var(--text);
-  font-size: 12px;
-  font-weight: 500;
-  padding: 6px 12px;
-  border-radius: 8px;
-  white-space: nowrap;
-  opacity: 0;
-  pointer-events: none;
-  transition: opacity 0.25s ease, transform 0.25s ease;
-}
-
-#whatsapp-float:hover .whatsapp-tooltip {
-  opacity: 1;
-  transform: translateY(-50%) translateX(0);
-}
-
-@media (pointer: coarse) {
-  .whatsapp-tooltip {
-    display: none;
-  }
-}
-
 /* ===== WIDGET DE CHAT (n8n) =====
-   Variáveis do @n8n/chat, alinhadas à identidade visual do site.
-   Posição (bottom/right/toggle--size) é calculada para o botão do
-   WhatsApp (.floating-actions) sempre ficar acima do toggle do chat. */
+   Variáveis do @n8n/chat, alinhadas à identidade visual do site. */
 #n8n-chat {
   --chat--color--primary: var(--accent);
   --chat--color--primary-shade-50: var(--accent-dark);
@@ -2049,105 +1988,6 @@ footer {
     bottom: 12px;
     padding: 18px;
   }
-}
-
-/* ===== POP-UP DE CAPTURA DE LEAD ===== */
-.lead-popup {
-  display: none;
-}
-
-.lead-popup:not([hidden]) {
-  position: fixed;
-  inset: 0;
-  background: rgba(9, 13, 23, 0.72);
-  backdrop-filter: blur(4px);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  z-index: 1200;
-  padding: 20px;
-  opacity: 0;
-  animation: leadPopupFade 0.35s ease forwards;
-}
-
-@keyframes leadPopupFade {
-  from { opacity: 0; }
-  to { opacity: 1; }
-}
-
-.lead-popup-box {
-  position: relative;
-  width: 100%;
-  max-width: 380px;
-  background: var(--bg-card);
-  border: 1px solid var(--glass-border);
-  border-radius: 18px;
-  padding: 36px 28px 28px;
-  text-align: center;
-  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.5);
-}
-
-.lead-popup-close {
-  position: absolute;
-  top: 12px;
-  right: 14px;
-  background: none;
-  border: none;
-  color: var(--text-muted);
-  font-size: 22px;
-  line-height: 1;
-  cursor: pointer;
-  transition: color 0.2s;
-}
-
-.lead-popup-close:hover {
-  color: var(--accent);
-}
-
-.lead-popup-box h3 {
-  font-size: 18px;
-  font-weight: 700;
-  color: var(--text);
-  margin-bottom: 8px;
-  line-height: 1.4;
-}
-
-.lead-popup-box > p {
-  font-size: 13px;
-  color: var(--text-muted);
-  margin-bottom: 22px;
-}
-
-#lead-popup-form {
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-}
-
-#lead-popup-form input {
-  width: 100%;
-  padding: 12px 14px;
-  background: rgba(255, 255, 255, 0.03);
-  border: 2px solid var(--border);
-  border-radius: 10px;
-  color: var(--text);
-  font-family: inherit;
-  font-size: 14px;
-  transition: border-color 0.3s;
-}
-
-#lead-popup-form input:focus {
-  outline: none;
-  border-color: var(--accent);
-  box-shadow: 0 0 0 3px rgba(56, 189, 248, 0.12);
-}
-
-#lead-popup-form .btn-primary {
-  border: none;
-  cursor: pointer;
-  font-family: inherit;
-  font-size: 14px;
-  margin-top: 4px;
 }
 
 /* ===== RESPONSIVO ===== */
@@ -2293,24 +2133,19 @@ footer {
     gap: 10px;
   }
 
-  #whatsapp-float {
-    width: 50px;
-    height: 50px;
-  }
-
-  #whatsapp-float svg {
-    width: 24px;
-    height: 24px;
-  }
-
   .desafios-grid,
   .servicos-grid,
   .timeline,
   .resultados-grid {
     grid-template-columns: 1fr;
   }
-
-  .lead-popup-box {
-    padding: 30px 22px 24px;
-  }
 }
+
+.ana-teaser{position:fixed;right:24px;bottom:100px;z-index:9999;max-width:270px;padding:14px 34px 14px 16px;border-radius:14px 14px 4px 14px;background:#1a2233;border:1px solid rgba(99,102,241,.45);color:#e5e7eb;font-size:14px;line-height:1.45;box-shadow:0 12px 30px rgba(0,0,0,.45);cursor:pointer;animation:anaTeaserIn .35s ease-out}
+.ana-teaser strong{display:block;font-size:13px;color:#93c5fd;margin-bottom:4px}
+.ana-teaser p{margin:0}
+.ana-teaser-close{position:absolute;top:6px;right:8px;background:none;border:0;color:#9ca3af;font-size:18px;line-height:1;cursor:pointer}
+.ana-teaser-close:hover{color:#fff}
+@keyframes anaTeaserIn{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
+@media (max-width:480px){.ana-teaser{right:16px;left:16px;max-width:none;bottom:90px}}
+@media (prefers-reduced-motion:reduce){.ana-teaser{animation:none}}
