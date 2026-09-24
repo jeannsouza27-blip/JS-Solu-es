@@ -512,10 +512,22 @@ if (particlesContainer && !prefersReducedMotion && !isMobileViewport) {
     if (!toggle || chatIsOpen()) return;
     // O banner de cookies ocupa quase a largura toda no mobile: espera ele
     // ser fechado (aceitar/recusar) antes de mostrar o balão, pra não
-    // sobrepor os botões do banner.
+    // sobrepor os botões do banner. Sem polling: reage ao clique em
+    // Aceitar/Recusar (ou ao usuário abrir o chat antes disso, cancelando
+    // a espera). Não marca KEY aqui — se o visitante sair sem fechar o
+    // banner, o balão ainda deve poder aparecer numa próxima página da
+    // mesma visita.
     const cookieBanner = document.getElementById('cookie-consent');
     if (cookieBanner && !cookieBanner.hidden) {
-      setTimeout(showTeaser, 1000);
+      const onWaitClick = (e) => {
+        if (e.target.closest('#cookie-accept, #cookie-decline')) {
+          document.removeEventListener('click', onWaitClick, true);
+          setTimeout(showTeaser, 2000); // respiro pra não surgir junto do clique
+        } else if (e.target.closest('#n8n-chat .chat-window-toggle')) {
+          document.removeEventListener('click', onWaitClick, true);
+        }
+      };
+      document.addEventListener('click', onWaitClick, true);
       return;
     }
     try { sessionStorage.setItem(KEY, '1'); } catch (e) {}
