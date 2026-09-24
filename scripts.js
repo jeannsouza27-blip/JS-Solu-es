@@ -1,5 +1,3 @@
-import { createChat } from 'https://cdn.jsdelivr.net/npm/@n8n/chat/dist/chat.bundle.es.js';
-
 // ===== CONFIGURAÇÃO N8N (chat de IA e formulário de contato) =====
 // Ambos os webhooks só aceitam requisições de https://jssolucoes.tech e
 // https://www.jssolucoes.tech — em localhost dão erro de CORS (esperado).
@@ -71,6 +69,7 @@ if (cookieAcceptBtn) {
     localStorage.setItem(COOKIE_CONSENT_KEY, 'accepted');
     cookieConsentBanner.hidden = true;
     loadAnalytics();
+    openN8nChat();
   });
 }
 
@@ -435,37 +434,53 @@ if (contactForm) {
 // ===== WIDGET DE CHAT COM O AGENTE DE IA (n8n) =====
 const n8nChatContainer = document.getElementById('n8n-chat');
 
+// Import dinâmico (em vez de "import" estático no topo do arquivo): se o
+// CDN do widget falhar, estiver lento ou for bloqueado por um ad-blocker
+// (comum em widgets de chat), isso não pode travar o resto do site —
+// menu, formulário, banner de cookies etc. precisam continuar funcionando.
 if (n8nChatContainer) {
-  createChat({
-    webhookUrl: N8N_CHAT_URL,
-    mode: 'window',
-    showWelcomeScreen: false,
-    enableStreaming: false,
-    defaultLanguage: 'en',
-    initialMessages: [
-      'Olá! 👋 Sou a Ana, assistente virtual da JS Soluções.',
-      'Me conta: qual o ramo da sua empresa e o que você gostaria de automatizar?'
-    ],
-    i18n: {
-      en: {
-        title: 'Ana • JS Soluções',
-        subtitle: 'Respondo na hora, 24h por dia',
-        inputPlaceholder: 'Digite sua mensagem...',
-        getStarted: 'Nova conversa',
-        footer: '',
-        closeButtonTooltip: 'Fechar'
-      }
-    }
-  });
+  import('https://cdn.jsdelivr.net/npm/@n8n/chat/dist/chat.bundle.es.js')
+    .then(({ createChat }) => {
+      createChat({
+        webhookUrl: N8N_CHAT_URL,
+        mode: 'window',
+        showWelcomeScreen: false,
+        enableStreaming: false,
+        defaultLanguage: 'en',
+        initialMessages: [
+          'Olá! 👋 Sou a Ana, assistente virtual da JS Soluções.',
+          'Me conta: qual o ramo da sua empresa e o que você gostaria de automatizar?'
+        ],
+        i18n: {
+          en: {
+            title: 'Ana • JS Soluções',
+            subtitle: 'Respondo na hora, 24h por dia',
+            inputPlaceholder: 'Digite sua mensagem...',
+            getStarted: 'Nova conversa',
+            footer: '',
+            closeButtonTooltip: 'Fechar'
+          }
+        }
+      });
+    })
+    .catch((err) => {
+      console.warn('Não foi possível carregar o widget de chat (rede ou bloqueador de anúncios).', err);
+    });
 }
 
 // Abre o widget programaticamente. O @n8n/chat (v1.39) não expõe uma API
 // pública de abrir/fechar — clicamos no botão flutuante que ele mesmo
 // renderiza. Se uma versão futura do pacote mudar essas classes, isso
 // para de funcionar e precisa ser revisto.
-function openN8nChat() {
+// Como o widget carrega via import dinâmico, o botão pode ainda não
+// existir no instante do clique — tenta de novo por até ~5s antes de
+// desistir (ex: CDN bloqueada por um ad-blocker).
+function openN8nChat(retriesLeft = 25) {
   const toggle = document.querySelector('#n8n-chat .chat-window-toggle');
-  if (!toggle) return;
+  if (!toggle) {
+    if (retriesLeft > 0) setTimeout(() => openN8nChat(retriesLeft - 1), 200);
+    return;
+  }
   const panel = document.querySelector('#n8n-chat .chat-window');
   const isOpen = panel && getComputedStyle(panel).display !== 'none';
   if (!isOpen) toggle.click();
