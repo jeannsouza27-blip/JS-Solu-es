@@ -6,11 +6,91 @@ import { createChat } from 'https://cdn.jsdelivr.net/npm/@n8n/chat/dist/chat.bun
 const N8N_CHAT_URL = 'https://js-solucoes-n8n-editor.w49ep4.easypanel.host/webhook/5554e566-8d29-4e0d-b33d-e0219d4bd1a6/chat';
 const N8N_FORM_URL = 'https://js-solucoes-n8n-editor.w49ep4.easypanel.host/webhook/form-site';
 
-// ===== RASTREAMENTO DE EVENTOS =====
-// Placeholder até a Tarefa 6 conectar GA4/Meta Pixel de verdade.
+// ===== RASTREAMENTO DE EVENTOS (GA4 + Meta Pixel) =====
+// TODO JEANN: substituir pelos IDs reais do GA4 e do Meta Pixel.
+const GA4_MEASUREMENT_ID = '<<G-XXXXXXX>>';
+const META_PIXEL_ID = '<<PIXEL_ID>>';
+const COOKIE_CONSENT_KEY = 'jsSolucoesCookieConsent';
+
 function trackEvent(name, params = {}) {
-  console.debug('[trackEvent]', name, params);
+  if (typeof window.gtag === 'function') {
+    window.gtag('event', name, params);
+  }
+  if (typeof window.fbq === 'function') {
+    window.fbq('trackCustom', name, params);
+  }
 }
+
+function loadGoogleAnalytics() {
+  const script = document.createElement('script');
+  script.async = true;
+  script.src = `https://www.googletagmanager.com/gtag/js?id=${GA4_MEASUREMENT_ID}`;
+  document.head.appendChild(script);
+
+  window.dataLayer = window.dataLayer || [];
+  window.gtag = function () { window.dataLayer.push(arguments); };
+  window.gtag('js', new Date());
+  window.gtag('config', GA4_MEASUREMENT_ID);
+}
+
+function loadMetaPixel() {
+  (function (f, b, e, v, n, t, s) {
+    if (f.fbq) return;
+    n = f.fbq = function () {
+      n.callMethod ? n.callMethod.apply(n, arguments) : n.queue.push(arguments);
+    };
+    if (!f._fbq) f._fbq = n;
+    n.push = n; n.loaded = true; n.version = '2.0';
+    n.queue = []; t = b.createElement(e); t.async = true;
+    t.src = v; s = b.getElementsByTagName(e)[0];
+    s.parentNode.insertBefore(t, s);
+  })(window, document, 'script', 'https://connect.facebook.net/en_US/fbevents.js');
+  window.fbq('init', META_PIXEL_ID);
+  window.fbq('track', 'PageView');
+}
+
+function loadAnalytics() {
+  loadGoogleAnalytics();
+  loadMetaPixel();
+}
+
+// ===== BANNER DE CONSENTIMENTO DE COOKIES (LGPD) =====
+const cookieConsentBanner = document.getElementById('cookie-consent');
+const cookieAcceptBtn = document.getElementById('cookie-accept');
+const cookieDeclineBtn = document.getElementById('cookie-decline');
+const storedCookieConsent = localStorage.getItem(COOKIE_CONSENT_KEY);
+
+if (storedCookieConsent === 'accepted') {
+  loadAnalytics();
+} else if (!storedCookieConsent && cookieConsentBanner) {
+  cookieConsentBanner.hidden = false;
+}
+
+if (cookieAcceptBtn) {
+  cookieAcceptBtn.addEventListener('click', () => {
+    localStorage.setItem(COOKIE_CONSENT_KEY, 'accepted');
+    cookieConsentBanner.hidden = true;
+    loadAnalytics();
+  });
+}
+
+if (cookieDeclineBtn) {
+  cookieDeclineBtn.addEventListener('click', () => {
+    localStorage.setItem(COOKIE_CONSENT_KEY, 'declined');
+    cookieConsentBanner.hidden = true;
+  });
+}
+
+// ===== EVENTOS DE CONVERSÃO: cliques em links do WhatsApp =====
+document.querySelectorAll('a[href^="https://wa.me/"]').forEach(link => {
+  link.addEventListener('click', () => {
+    const origem = link.dataset.origin || 'outro';
+    trackEvent('whatsapp_click', { origem });
+    if (link.dataset.cta === 'consultoria') {
+      trackEvent('cta_consultoria', { origem });
+    }
+  });
+});
 
 // ===== PRELOADER =====
 window.addEventListener('load', () => {
@@ -206,6 +286,7 @@ if (leadPopup && leadPopupClose && leadPopupForm) {
       `Olá! Me chamo ${name} (WhatsApp: ${phone}) e quero receber o diagnóstico gratuito de automação da JS Soluções.`
     );
     window.open(`https://wa.me/5527997948088?text=${text}`, '_blank', 'noopener');
+    trackEvent('whatsapp_click', { origem: 'lead_popup' });
     hideLeadPopup();
     leadPopupForm.reset();
   });
@@ -391,6 +472,19 @@ const openChatCta = document.getElementById('open-chat-cta');
 if (openChatCta) {
   openChatCta.addEventListener('click', openN8nChat);
 }
+
+// Dispara chat_open tanto no clique direto no toggle quanto no clique
+// programático disparado por openN8nChat() (ambos emitem um evento real).
+// Usa a fase de captura para ler o estado ANTES do widget alternar (a
+// atualização do Vue é assíncrona, então checar depois do clique pegaria
+// sempre o estado antigo).
+document.addEventListener('click', (e) => {
+  const toggle = e.target.closest('#n8n-chat .chat-window-toggle');
+  if (!toggle) return;
+  const panel = document.querySelector('#n8n-chat .chat-window');
+  const wasOpen = panel && getComputedStyle(panel).display !== 'none';
+  if (!wasOpen) trackEvent('chat_open');
+}, true);
 
 // ===== BIBLIOTECAS EXTERNAS (guardas para caso o CDN falhe) =====
 if (typeof AOS !== 'undefined') {

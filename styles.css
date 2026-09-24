@@ -1990,6 +1990,56 @@ footer {
   }
 }
 
+/* ===== BANNER DE COOKIES (LGPD) ===== */
+.cookie-consent {
+  position: fixed;
+  left: 20px;
+  right: 20px;
+  bottom: 20px;
+  max-width: 640px;
+  margin: 0 auto;
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 20px 24px;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 16px;
+  justify-content: space-between;
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.35);
+  z-index: 1000;
+}
+
+.cookie-consent p {
+  flex: 1;
+  min-width: 220px;
+  font-size: 13px;
+  color: var(--text-secondary);
+  line-height: 1.6;
+}
+
+.cookie-consent-actions {
+  display: flex;
+  gap: 10px;
+  flex-shrink: 0;
+}
+
+.cookie-consent-actions .btn-primary,
+.cookie-consent-actions .btn-secondary {
+  padding: 9px 18px;
+  font-size: 13px;
+}
+
+@media (max-width: 480px) {
+  .cookie-consent {
+    left: 12px;
+    right: 12px;
+    bottom: 12px;
+    padding: 18px;
+  }
+}
+
 /* ===== POP-UP DE CAPTURA DE LEAD ===== */
 .lead-popup {
   display: none;
