@@ -104,19 +104,19 @@ window.addEventListener('load', () => {
 // ===== ANIMAÇÃO DOS CARDS DE PROJETO AO ENTRAR NA TELA =====
 const cards = document.querySelectorAll('.card');
 
-const cardObserver = new IntersectionObserver((entries) => {
-  entries.forEach((entry, i) => {
-    if (entry.isIntersecting) {
-      setTimeout(() => {
-        entry.target.style.opacity = '1';
-        entry.target.style.transform = 'translateY(0)';
-      }, i * 150);
-      cardObserver.unobserve(entry.target);
-    }
-  });
-}, { threshold: 0.15 });
+if ('IntersectionObserver' in window) {
+  cards.forEach(card => card.classList.add('motion-ready'));
 
-cards.forEach(card => cardObserver.observe(card));
+  const cardObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (!entry.isIntersecting) return;
+      entry.target.classList.add('is-visible');
+      cardObserver.unobserve(entry.target);
+    });
+  }, { threshold: 0.15 });
+
+  cards.forEach(card => cardObserver.observe(card));
+}
 
 // ===== MENU MOBILE (hambúrguer -> X) =====
 const menuToggle = document.getElementById('menu-toggle');
@@ -195,28 +195,24 @@ if (window.matchMedia('(pointer: fine)').matches) {
   document.body.classList.add('custom-cursor-active');
   const cursorDot = document.getElementById('cursor-dot');
   const cursorOutline = document.getElementById('cursor-outline');
-  let outlineX = 0, outlineY = 0, targetX = 0, targetY = 0;
+  let cursorX = 0;
+  let cursorY = 0;
+  let cursorFrame = 0;
 
   document.addEventListener('mousemove', (e) => {
-    targetX = e.clientX;
-    targetY = e.clientY;
-    if (cursorDot) {
-      cursorDot.style.left = targetX + 'px';
-      cursorDot.style.top = targetY + 'px';
-    }
-  });
+    cursorX = e.clientX;
+    cursorY = e.clientY;
+    if (cursorFrame) return;
 
-  // O contorno segue com um leve atraso (lerp) para efeito suave
-  function animateOutline() {
-    outlineX += (targetX - outlineX) * 0.18;
-    outlineY += (targetY - outlineY) * 0.18;
-    if (cursorOutline) {
-      cursorOutline.style.left = outlineX + 'px';
-      cursorOutline.style.top = outlineY + 'px';
-    }
-    requestAnimationFrame(animateOutline);
-  }
-  animateOutline();
+    cursorFrame = requestAnimationFrame(() => {
+      [cursorDot, cursorOutline].forEach(cursor => {
+        if (!cursor) return;
+        cursor.style.left = cursorX + 'px';
+        cursor.style.top = cursorY + 'px';
+      });
+      cursorFrame = 0;
+    });
+  });
 
   document.querySelectorAll('a, button, .skill-badge, .filter-btn').forEach(el => {
     el.addEventListener('mouseenter', () => cursorOutline && cursorOutline.classList.add('cursor-hover'));
@@ -461,7 +457,13 @@ document.addEventListener('click', (e) => {
 
 // ===== BIBLIOTECAS EXTERNAS (guardas para caso o CDN falhe) =====
 if (typeof AOS !== 'undefined') {
-  AOS.init({ duration: 700, once: true, offset: 60 });
+  AOS.init({
+    duration: 480,
+    easing: 'cubic-bezier(0.16, 1, 0.3, 1)',
+    once: true,
+    offset: 48,
+    disable: window.matchMedia('(prefers-reduced-motion: reduce)').matches
+  });
 }
 
 if (typeof VanillaTilt !== 'undefined') {
@@ -480,13 +482,13 @@ if (particlesContainer && !prefersReducedMotion && !isMobileViewport) {
     if (typeof particlesJS === 'undefined') return;
     particlesJS('particles-js', {
       particles: {
-        number: { value: 55, density: { enable: true, value_area: 900 } },
+        number: { value: 24, density: { enable: true, value_area: 900 } },
         color: { value: '#38bdf8' },
         shape: { type: 'circle' },
-        opacity: { value: 0.5, random: true },
+        opacity: { value: 0.35, random: true },
         size: { value: 3, random: true },
-        line_linked: { enable: true, distance: 140, color: '#38bdf8', opacity: 0.25, width: 1 },
-        move: { enable: true, speed: 1.1, direction: 'none', random: true, out_mode: 'out' }
+        line_linked: { enable: true, distance: 110, color: '#38bdf8', opacity: 0.16, width: 1 },
+        move: { enable: true, speed: 0.55, direction: 'none', random: true, out_mode: 'out' }
       },
       interactivity: {
         detect_on: 'canvas',

@@ -15,20 +15,20 @@
     content="Automatize o atendimento, as vendas e a gestão da sua empresa com Agentes de IA e automações sob medida.">
   <!-- TODO JEANN: o og:image aponta para o logo em SVG; várias redes (WhatsApp, LinkedIn) não
        renderizam bem SVG como preview. Ideal criar um banner PNG/JPG de 1200x630px e trocar aqui e no twitter:image. -->
-  <meta property="og:image" content="https://jssolucoes.tech/js-solucoes-logo.svg">
+  <meta property="og:image" content="https://jssolucoes.tech/js-solucoes-logo-brand.svg">
   <meta property="og:url" content="https://jssolucoes.tech">
   <meta property="og:locale" content="pt_BR">
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="JS Soluções — Agentes de IA e Automação para Empresas">
   <meta name="twitter:description"
     content="Automatize o atendimento, as vendas e a gestão da sua empresa com Agentes de IA e automações sob medida.">
-  <meta name="twitter:image" content="https://jssolucoes.tech/js-solucoes-logo.svg">
+  <meta name="twitter:image" content="https://jssolucoes.tech/js-solucoes-logo-brand.svg">
 
-  <link rel="icon" type="image/svg+xml" href="./js-solucoes-logo.svg">
+  <link rel="icon" type="image/svg+xml" href="./js-solucoes-logo-brand.svg">
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap"
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
     rel="stylesheet">
 
   <!-- AOS (Animate On Scroll) -->
@@ -45,7 +45,7 @@
     "@context": "https://schema.org",
     "@type": "ProfessionalService",
     "name": "JS Soluções",
-    "image": "https://jssolucoes.tech/js-solucoes-logo.svg",
+    "image": "https://jssolucoes.tech/js-solucoes-logo-brand.svg",
     "url": "https://jssolucoes.tech",
     "telephone": "+55-27-99794-8088",
     "email": "jeannsouza27@gmail.com",
@@ -120,7 +120,7 @@
 
   <!-- Preloader -->
   <div id="preloader">
-    <img src="./js-solucoes-logo.svg" alt="JS Soluções" class="preloader-logo" width="238" height="60">
+    <img src="./js-solucoes-logo-brand.svg" alt="JS Soluções" class="preloader-logo" width="194" height="60">
     <div class="preloader-bar"><span></span></div>
   </div>
 
@@ -133,7 +133,7 @@
 
   <header id="site-header">
     <a href="#home" class="logo">
-      <img src="./js-solucoes-logo.svg" alt="JS Soluções" class="logo-img" width="158" height="40">
+      <img src="./js-solucoes-logo-brand.svg" alt="JS Soluções" class="logo-img" width="155" height="48">
     </a>
     <nav id="nav-menu">
       <a href="#home">Início</a>
@@ -176,18 +176,59 @@
         atendidas</p>
     </div>
     <div class="hero-image">
-      <div class="chat-mock" aria-hidden="true">
-        <div class="chat-mock-header">
-          <span class="chat-mock-dot"></span>
-          <span class="chat-mock-title">Agente JS Soluções</span>
-          <span class="chat-mock-status">online</span>
+      <div class="instrument-panel" aria-label="Painel de instrumentos da operação">
+        <div class="panel-header">
+          <div class="panel-dots">
+            <span></span>
+            <span></span>
+            <span></span>
+          </div>
+          <span class="panel-title">Painel de Instrumentos</span>
+          <span class="panel-status">online</span>
         </div>
-        <div class="chat-mock-body">
-          <div class="chat-bubble chat-in">Olá! Preciso automatizar o atendimento da minha loja 🙂</div>
-          <div class="chat-bubble chat-out">Perfeito! Posso te mostrar como isso funciona. Quer atender no WhatsApp,
-            no site ou nos dois?</div>
-          <div class="chat-bubble chat-in">No WhatsApp mesmo</div>
-          <div class="chat-bubble chat-out">Ótimo, já te conecto com um especialista para um diagnóstico gratuito ✅
+
+        <div class="panel-body">
+          <div class="panel-metrics">
+            <div class="metric-card">
+              <span class="metric-label">Atendimentos</span>
+              <strong>24/7</strong>
+            </div>
+            <div class="metric-card accent">
+              <span class="metric-label">Vendas</span>
+              <strong>+38%</strong>
+            </div>
+          </div>
+
+          <div class="signal-module">
+            <div class="signal-row">
+              <span>Lead capturado</span>
+              <span class="signal-pill ok">OK</span>
+            </div>
+            <div class="signal-row">
+              <span>Agendamento automático</span>
+              <span class="signal-pill ok">OK</span>
+            </div>
+            <div class="signal-row">
+              <span>WhatsApp + CRM</span>
+              <span class="signal-pill ok">OK</span>
+            </div>
+          </div>
+
+          <div class="flow-visual" aria-hidden="true">
+            <span>lead</span>
+            <span>IA</span>
+            <span>venda</span>
+          </div>
+
+          <div class="mini-logs">
+            <div class="log-item in">
+              <small>Cliente</small>
+              <p>Quero saber mais sobre automação.</p>
+            </div>
+            <div class="log-item out">
+              <small>Agente</small>
+              <p>Posso te conectar com um especialista agora.</p>
+            </div>
           </div>
         </div>
       </div>
@@ -772,7 +813,7 @@
     <div class="footer-inner">
       <div class="footer-top">
         <div class="footer-brand">
-          <img src="./js-solucoes-logo.svg" alt="JS Soluções" class="footer-logo-img" loading="lazy" width="135"
+          <img src="./js-solucoes-logo-brand.svg" alt="JS Soluções" class="footer-logo-img" loading="lazy" width="110"
             height="34">
           <p>Agentes de IA, automação e desenvolvimento web para empresas que querem crescer.</p>
         </div>
