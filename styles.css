@@ -1508,30 +1508,40 @@ section h2::after {
   margin-bottom: 2px;
 }
 
-/* Case em destaque: ocupa a largura toda, texto + print do sistema */
+/* Case em destaque: largura toda; história e números lado a lado, painel embaixo */
 .resultado-card--destaque {
-  display: grid;
-  grid-template-columns: minmax(0, 1fr) minmax(0, 1.15fr);
-  gap: 48px;
-  align-items: center;
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
   padding: 40px;
 }
 
 .case-info {
+  display: grid;
+  grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr);
+  gap: 48px;
+  align-items: start;
+}
+
+.case-story,
+.case-proof {
   display: flex;
   flex-direction: column;
 }
 
-.case-info .card-tag,
-.case-info .card-link {
+.case-story .card-tag {
   align-self: flex-start;
+}
+
+.case-proof .resultado-numbers {
+  margin-top: 0;
 }
 
 .case-highlight {
   display: flex;
   flex-direction: column;
   gap: 4px;
-  margin: 8px 0 20px;
+  margin-bottom: 20px;
 }
 
 .case-highlight-value {
@@ -1555,14 +1565,16 @@ section h2::after {
 .case-media-placeholder {
   display: block;
   width: 100%;
-  aspect-ratio: 16 / 10;
   border-radius: 12px;
   border: 1px solid var(--border);
 }
 
 .case-media img {
-  object-fit: cover;
-  object-position: top left;
+  height: auto;
+}
+
+.case-media-placeholder {
+  aspect-ratio: 16 / 10;
 }
 
 .case-media-placeholder {
@@ -2404,9 +2416,13 @@ footer {
   }
 
   .resultado-card--destaque {
-    grid-template-columns: minmax(0, 1fr);
     gap: 28px;
     padding: 32px 28px;
+  }
+
+  .case-info {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 8px;
   }
 
   .footer-top {
