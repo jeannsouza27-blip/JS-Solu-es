@@ -114,32 +114,48 @@ window.addEventListener('load', () => {
   const pending = new Set();
   const fold = window.innerHeight;
 
-  const reveal = (el) => {
+  const STAGGER_MS = 60;
+  const STAGGER_MAX_MS = 300;
+
+  const reveal = (el, delay = 0) => {
     if (!pending.delete(el)) return;
     observer.unobserve(el);
+    el.style.setProperty('--reveal-delay', delay + 'ms');
     el.classList.remove('reveal-pending');
     el.classList.add('reveal-in');
-    el.addEventListener('animationend', () => el.classList.remove('reveal-in'), { once: true });
+    el.addEventListener('animationend', () => {
+      el.classList.remove('reveal-in');
+      el.style.removeProperty('--reveal-delay');
+    }, { once: true });
   };
 
+  // Elementos que entram na tela no mesmo instante (uma linha de cards, por
+  // exemplo) aparecem em cascata, na ordem de leitura, com no máximo 300ms.
   const observer = new IntersectionObserver((entries) => {
-    entries.forEach(entry => { if (entry.isIntersecting) reveal(entry.target); });
+    entries
+      .filter(entry => entry.isIntersecting)
+      .map(entry => entry.target)
+      .sort((a, b) => {
+        const ra = a.getBoundingClientRect();
+        const rb = b.getBoundingClientRect();
+        return (ra.top - rb.top) || (ra.left - rb.left);
+      })
+      .forEach((el, i) => reveal(el, Math.min(i * STAGGER_MS, STAGGER_MAX_MS)));
   }, { rootMargin: '0px 0px -6% 0px' });
 
   targets.forEach(el => {
     if (el.getBoundingClientRect().top < fold) return; // já está na tela: não esconde
-    const delay = Math.min(Number(el.dataset.aosDelay) || 0, 240);
-    if (delay) el.style.setProperty('--reveal-delay', delay + 'ms');
     el.classList.add('reveal-pending');
     pending.add(el);
     observer.observe(el);
   });
 
+  // Rolagem rápida, âncora ou voltar no histórico: o que já ficou acima da
+  // tela sem o observer disparar aparece na hora, sem esperar.
   let ticking = false;
   const sweep = () => {
     ticking = false;
-    const bottom = window.innerHeight;
-    pending.forEach(el => { if (el.getBoundingClientRect().top < bottom) reveal(el); });
+    pending.forEach(el => { if (el.getBoundingClientRect().bottom < 0) reveal(el); });
     if (!pending.size) window.removeEventListener('scroll', onScroll);
   };
   const onScroll = () => {
@@ -147,6 +163,111 @@ window.addEventListener('load', () => {
   };
   window.addEventListener('scroll', onScroll, { passive: true });
   window.addEventListener('hashchange', sweep);
+})();
+
+// ===== NÚMEROS QUE CONTAM (case de Resultados) =====
+// O valor real fica no HTML (sem JS ou com prefers-reduced-motion ele aparece
+// direto). Aqui ele só sobe de zero até o valor, uma vez, ao entrar na tela.
+// Dígitos com largura fixa (tabular-nums) e cada número no próprio bloco:
+// a contagem não empurra nada do layout.
+(function () {
+  const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if (reduceMotion || !('IntersectionObserver' in window)) return;
+
+  const DURATION_MS = 900;
+  const format = (n) => n.toLocaleString('pt-BR');
+  const counters = [];
+
+  document.querySelectorAll('.case-highlight-value, .resultado-numbers span').forEach(el => {
+    const match = el.textContent.trim().match(/^([^\d]*)([\d.]+)(.*)$/);
+    if (!match) return;
+    const target = Number(match[2].replace(/\./g, ''));
+    if (!Number.isFinite(target) || target === 0) return;
+    counters.push({ el, prefix: match[1], target, suffix: match[3], final: el.textContent });
+  });
+  if (!counters.length) return;
+
+  const run = ({ el, prefix, target, suffix, final }) => {
+    const start = performance.now();
+    const tick = (now) => {
+      const t = Math.min((now - start) / DURATION_MS, 1);
+      const eased = 1 - Math.pow(1 - t, 3);
+      el.textContent = prefix + format(Math.round(target * eased)) + suffix;
+      if (t < 1) requestAnimationFrame(tick);
+      else el.textContent = final;
+    };
+    requestAnimationFrame(tick);
+  };
+
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (!entry.isIntersecting) return;
+      observer.unobserve(entry.target);
+      const counter = counters.find(c => c.el === entry.target);
+      if (counter && !counter.done) { counter.done = true; run(counter); }
+    });
+  }, { threshold: 0.6 });
+
+  counters.forEach(counter => {
+    counter.el.textContent = counter.prefix + '0' + counter.suffix;
+    observer.observe(counter.el);
+  });
+
+  // Rolagem rápida/âncora: número que já ficou acima da tela sem animar
+  // recebe o valor final na hora (nunca fica parado em zero).
+  const settle = () => {
+    counters.forEach(counter => {
+      if (counter.done || counter.el.getBoundingClientRect().bottom >= 0) return;
+      counter.done = true;
+      observer.unobserve(counter.el);
+      counter.el.textContent = counter.final;
+    });
+  };
+  window.addEventListener('scroll', settle, { passive: true });
+})();
+
+// ===== GRÁFICOS: BARRAS CRESCEM AO ENTRAR NA TELA =====
+// Só "arma" (barras em zero) os gráficos ainda abaixo da dobra; sem JS ou com
+// prefers-reduced-motion as barras ficam no tamanho final.
+(function () {
+  const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if (reduceMotion || !('IntersectionObserver' in window)) return;
+
+  const charts = [...document.querySelectorAll('.chart')]
+    .filter(chart => chart.getBoundingClientRect().top >= window.innerHeight);
+  if (!charts.length) return;
+
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (!entry.isIntersecting) return;
+      observer.unobserve(entry.target);
+      entry.target.classList.add('chart-in');
+    });
+  }, { threshold: 0.35 });
+
+  charts.forEach(chart => {
+    chart.querySelectorAll('.bar').forEach((bar, i) => bar.style.setProperty('--i', i));
+    chart.classList.add('chart-armed');
+    observer.observe(chart);
+  });
+
+  // Rolagem rápida/âncora: gráfico que já ficou acima da tela aparece completo
+  window.addEventListener('scroll', () => {
+    charts.forEach(chart => {
+      if (!chart.classList.contains('chart-in') && chart.getBoundingClientRect().bottom < 0) {
+        chart.classList.add('chart-in');
+      }
+    });
+  }, { passive: true });
+})();
+
+// ===== HERO: PAUSA O BRILHO ANIMADO FORA DA TELA =====
+(function () {
+  const hero = document.querySelector('.hero');
+  if (!hero || !('IntersectionObserver' in window)) return;
+  new IntersectionObserver(([entry]) => {
+    hero.classList.toggle('is-offscreen', !entry.isIntersecting);
+  }).observe(hero);
 })();
 
 // ===== MENU MOBILE (hambúrguer -> X) =====
@@ -482,10 +603,6 @@ document.addEventListener('click', (e) => {
 }, true);
 
 // ===== BIBLIOTECAS EXTERNAS (guardas para caso o CDN falhe) =====
-if (typeof VanillaTilt !== 'undefined') {
-  VanillaTilt.init(document.querySelectorAll('[data-tilt]'));
-}
-
 // ===== PARTICLES.JS — carregado sob demanda, só em desktop e sem prefers-reduced-motion =====
 const particlesContainer = document.getElementById('particles-js');
 const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
