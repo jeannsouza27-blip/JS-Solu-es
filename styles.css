@@ -1561,6 +1561,157 @@ section h2::after {
   margin: 0;
 }
 
+/* ===== GRÁFICOS DO CASE (HTML puro, dados do relatório) ===== */
+.case-charts {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1.2fr);
+  gap: 20px;
+}
+
+.chart {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  padding: 20px;
+  background: rgba(15, 23, 42, 0.55);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  min-width: 0;
+}
+
+.chart-title {
+  font-size: var(--type-support);
+  font-weight: 600;
+  line-height: 1.4;
+  color: var(--text);
+}
+
+.chart-note {
+  margin-top: 4px;
+  font-size: var(--type-label);
+  line-height: 1.5;
+  color: var(--text-muted);
+}
+
+.chart-key {
+  display: inline-block;
+  width: 10px;
+  height: 10px;
+  margin-right: 6px;
+  border-radius: 2px;
+  background: rgba(148, 163, 184, 0.16);
+  border: 1px solid rgba(148, 163, 184, 0.3);
+  vertical-align: -1px;
+}
+
+.bars {
+  display: flex;
+  align-items: flex-end;
+  height: 168px;
+  border-bottom: 1px solid var(--border);
+}
+
+.bar {
+  position: relative;
+  flex: 1;
+  min-width: 0;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 4px;
+}
+
+/* Faixa de fora do expediente, atrás da barra */
+.bar.off::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: rgba(148, 163, 184, 0.08);
+}
+
+.bar-fill {
+  position: relative;
+  width: 64%;
+  max-width: 32px;
+  height: calc(var(--v) / var(--max) * 84%);
+  background: var(--accent);
+  border-radius: 4px 4px 0 0;
+  transition: filter 150ms ease;
+}
+
+.bar-value {
+  position: relative;
+  font-size: var(--type-label);
+  font-weight: 600;
+  line-height: 1;
+  color: var(--text);
+  font-variant-numeric: tabular-nums;
+}
+
+.bar:hover .bar-fill {
+  filter: brightness(1.25);
+}
+
+/* Tooltip por barra (mouse); leitores de tela usam a tabela .sr-only */
+.bar[data-tip]:hover::after {
+  content: attr(data-tip);
+  position: absolute;
+  bottom: calc(100% + 8px);
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 3;
+  padding: 6px 10px;
+  border-radius: 6px;
+  background: var(--bg);
+  border: 1px solid var(--border);
+  box-shadow: 0 8px 20px rgba(2, 6, 23, 0.5);
+  color: var(--text);
+  font-size: var(--type-label);
+  font-weight: 600;
+  white-space: nowrap;
+  pointer-events: none;
+}
+
+.bar-axis {
+  display: flex;
+  margin-top: -8px;
+  font-size: var(--type-label);
+  color: var(--text-muted);
+  font-variant-numeric: tabular-nums;
+}
+
+.bar-axis span {
+  flex: 1;
+  min-width: 0;
+  text-align: center;
+  white-space: nowrap;
+}
+
+/* Horas: rótulo a cada 3h, alinhado ao início da coluna */
+.bar-axis--hours span {
+  text-align: left;
+}
+
+.chart-source {
+  grid-column: 1 / -1;
+  font-size: var(--type-label);
+  color: var(--text-muted);
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
 .case-media img,
 .case-media-placeholder {
   display: block;
@@ -2423,6 +2574,15 @@ footer {
   .case-info {
     grid-template-columns: minmax(0, 1fr);
     gap: 8px;
+  }
+
+  .case-charts {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  /* Pouco espaço por coluna: datas da semana uma sim, outra não */
+  .bar-axis:not(.bar-axis--hours) span:nth-child(even) {
+    visibility: hidden;
   }
 
   .footer-top {

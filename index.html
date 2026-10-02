@@ -35,7 +35,7 @@
   <!-- Widget de chat com o agente de IA (n8n) -->
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@n8n/chat/dist/style.css">
 
-  <link rel="stylesheet" href="./styles.css?v=20261002">
+  <link rel="stylesheet" href="./styles.css?v=20261002b">
   <!-- Sem JavaScript o preloader nunca seria removido: some de imediato -->
   <noscript><style>#preloader { display: none; }</style></noscript>
 
@@ -432,10 +432,72 @@
               </div>
             </div>
           </div>
-          <figure class="case-media">
-            <img src="./alavanca-alana-resultados.png"
-              alt="Painel de resultados da Alana na Alavanca Imóveis: 71 leads qualificados, 64 clientes diferentes, 45% fora do horário comercial, 1.350 mensagens trocadas e gráfico de leads qualificados por semana"
-              width="2160" height="1024" loading="lazy">
+          <figure class="case-media case-charts">
+            <div class="chart">
+              <div class="chart-head">
+                <h4 class="chart-title">Leads qualificados por semana</h4>
+                <p class="chart-note">Semanas a partir da segunda-feira. A primeira e a última são parciais.</p>
+              </div>
+              <div class="bars" style="--max:16" aria-hidden="true">
+                <div class="bar" style="--v:2" data-tip="Semana de 27/07: 2 leads"><span class="bar-fill"></span></div>
+                <div class="bar" style="--v:4" data-tip="Semana de 03/08: 4 leads"><span class="bar-fill"></span></div>
+                <div class="bar" style="--v:4" data-tip="Semana de 10/08: 4 leads"><span class="bar-fill"></span></div>
+                <div class="bar" style="--v:9" data-tip="Semana de 17/08: 9 leads"><span class="bar-fill"></span></div>
+                <div class="bar" style="--v:8" data-tip="Semana de 24/08: 8 leads"><span class="bar-fill"></span></div>
+                <div class="bar" style="--v:16" data-tip="Semana de 31/08: 16 leads"><span class="bar-value">16</span><span class="bar-fill"></span></div>
+                <div class="bar" style="--v:9" data-tip="Semana de 07/09: 9 leads"><span class="bar-fill"></span></div>
+                <div class="bar" style="--v:4" data-tip="Semana de 14/09: 4 leads"><span class="bar-fill"></span></div>
+                <div class="bar" style="--v:6" data-tip="Semana de 21/09: 6 leads"><span class="bar-fill"></span></div>
+                <div class="bar" style="--v:9" data-tip="Semana de 28/09: 9 leads"><span class="bar-value">9</span><span class="bar-fill"></span></div>
+              </div>
+              <div class="bar-axis" aria-hidden="true"><span>27/07</span><span>03/08</span><span>10/08</span><span>17/08</span><span>24/08</span><span>31/08</span><span>07/09</span><span>14/09</span><span>21/09</span><span>28/09</span></div>
+            </div>
+            <div class="chart">
+              <div class="chart-head">
+                <h4 class="chart-title">Hora em que o lead foi qualificado</h4>
+                <p class="chart-note"><span class="chart-key" aria-hidden="true"></span>Fora do expediente de segunda a
+                  sexta (antes das 8h e depois das 18h)</p>
+              </div>
+              <div class="bars bars--hours" style="--max:11" aria-hidden="true">
+                <div class="bar off" style="--v:0" data-tip="0h: 0 leads"><span class="bar-fill"></span></div>
+                <div class="bar off" style="--v:2" data-tip="1h: 2 leads"><span class="bar-fill"></span></div>
+                <div class="bar off" style="--v:1" data-tip="2h: 1 lead"><span class="bar-fill"></span></div>
+                <div class="bar off" style="--v:0" data-tip="3h: 0 leads"><span class="bar-fill"></span></div>
+                <div class="bar off" style="--v:0" data-tip="4h: 0 leads"><span class="bar-fill"></span></div>
+                <div class="bar off" style="--v:0" data-tip="5h: 0 leads"><span class="bar-fill"></span></div>
+                <div class="bar off" style="--v:0" data-tip="6h: 0 leads"><span class="bar-fill"></span></div>
+                <div class="bar off" style="--v:2" data-tip="7h: 2 leads"><span class="bar-fill"></span></div>
+                <div class="bar" style="--v:5" data-tip="8h: 5 leads"><span class="bar-fill"></span></div>
+                <div class="bar" style="--v:2" data-tip="9h: 2 leads"><span class="bar-fill"></span></div>
+                <div class="bar" style="--v:5" data-tip="10h: 5 leads"><span class="bar-fill"></span></div>
+                <div class="bar" style="--v:1" data-tip="11h: 1 lead"><span class="bar-fill"></span></div>
+                <div class="bar" style="--v:11" data-tip="12h: 11 leads"><span class="bar-value">11</span><span class="bar-fill"></span></div>
+                <div class="bar" style="--v:4" data-tip="13h: 4 leads"><span class="bar-fill"></span></div>
+                <div class="bar" style="--v:5" data-tip="14h: 5 leads"><span class="bar-fill"></span></div>
+                <div class="bar" style="--v:3" data-tip="15h: 3 leads"><span class="bar-fill"></span></div>
+                <div class="bar" style="--v:7" data-tip="16h: 7 leads"><span class="bar-fill"></span></div>
+                <div class="bar" style="--v:3" data-tip="17h: 3 leads"><span class="bar-fill"></span></div>
+                <div class="bar off" style="--v:4" data-tip="18h: 4 leads"><span class="bar-fill"></span></div>
+                <div class="bar off" style="--v:8" data-tip="19h: 8 leads"><span class="bar-fill"></span></div>
+                <div class="bar off" style="--v:4" data-tip="20h: 4 leads"><span class="bar-fill"></span></div>
+                <div class="bar off" style="--v:1" data-tip="21h: 1 lead"><span class="bar-fill"></span></div>
+                <div class="bar off" style="--v:3" data-tip="22h: 3 leads"><span class="bar-fill"></span></div>
+                <div class="bar off" style="--v:0" data-tip="23h: 0 leads"><span class="bar-fill"></span></div>
+              </div>
+              <div class="bar-axis bar-axis--hours" aria-hidden="true"><span>0h</span><span></span><span></span><span>3h</span><span></span><span></span><span>6h</span><span></span><span></span><span>9h</span><span></span><span></span><span>12h</span><span></span><span></span><span>15h</span><span></span><span></span><span>18h</span><span></span><span></span><span>21h</span><span></span><span></span></div>
+            </div>
+            <table class="sr-only">
+              <caption>Leads qualificados por semana</caption>
+              <thead><tr><th scope="col">Semana</th><th scope="col">Leads</th></tr></thead>
+              <tbody><tr><th scope="row">27/07</th><td>2</td></tr><tr><th scope="row">03/08</th><td>4</td></tr><tr><th scope="row">10/08</th><td>4</td></tr><tr><th scope="row">17/08</th><td>9</td></tr><tr><th scope="row">24/08</th><td>8</td></tr><tr><th scope="row">31/08</th><td>16</td></tr><tr><th scope="row">07/09</th><td>9</td></tr><tr><th scope="row">14/09</th><td>4</td></tr><tr><th scope="row">21/09</th><td>6</td></tr><tr><th scope="row">28/09</th><td>9</td></tr></tbody>
+            </table>
+            <table class="sr-only">
+              <caption>Leads qualificados por hora do dia</caption>
+              <thead><tr><th scope="col">Hora</th><th scope="col">Leads</th></tr></thead>
+              <tbody><tr><th scope="row">0h</th><td>0</td></tr><tr><th scope="row">1h</th><td>2</td></tr><tr><th scope="row">2h</th><td>1</td></tr><tr><th scope="row">3h</th><td>0</td></tr><tr><th scope="row">4h</th><td>0</td></tr><tr><th scope="row">5h</th><td>0</td></tr><tr><th scope="row">6h</th><td>0</td></tr><tr><th scope="row">7h</th><td>2</td></tr><tr><th scope="row">8h</th><td>5</td></tr><tr><th scope="row">9h</th><td>2</td></tr><tr><th scope="row">10h</th><td>5</td></tr><tr><th scope="row">11h</th><td>1</td></tr><tr><th scope="row">12h</th><td>11</td></tr><tr><th scope="row">13h</th><td>4</td></tr><tr><th scope="row">14h</th><td>5</td></tr><tr><th scope="row">15h</th><td>3</td></tr><tr><th scope="row">16h</th><td>7</td></tr><tr><th scope="row">17h</th><td>3</td></tr><tr><th scope="row">18h</th><td>4</td></tr><tr><th scope="row">19h</th><td>8</td></tr><tr><th scope="row">20h</th><td>4</td></tr><tr><th scope="row">21h</th><td>1</td></tr><tr><th scope="row">22h</th><td>3</td></tr><tr><th scope="row">23h</th><td>0</td></tr></tbody>
+            </table>
+            <figcaption class="chart-source">Fonte: registro de mensagens e fichas de lead do fluxo no n8n, de 29/07 a
+              02/10/2026.</figcaption>
           </figure>
         </article>
 
@@ -857,7 +919,7 @@
 
   <!-- CDN: tilt 3D (partículas são carregadas sob demanda em scripts.js) -->
   <script src="https://cdn.jsdelivr.net/npm/vanilla-tilt@1.7.0/dist/vanilla-tilt.min.js" defer></script>
-  <script src="./scripts.js?v=20261002" defer></script>
+  <script src="./scripts.js?v=20261002b" defer></script>
 </body>
 
 </html>
