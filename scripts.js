@@ -6,7 +6,7 @@ const N8N_FORM_URL = 'https://js-solucoes-n8n-webhook.w49ep4.easypanel.host/webh
 
 // ===== RASTREAMENTO DE EVENTOS (GA4 + Meta Pixel) =====
 const GA4_MEASUREMENT_ID = 'G-HZCSZM35QD';
-const META_PIXEL_ID = 'XXXXXXXXXXXXXXX';
+const META_PIXEL_ID = '1762010108370659';
 const COOKIE_CONSENT_KEY = 'jsSolucoesCookieConsent';
 
 function trackEvent(name, params = {}) {
