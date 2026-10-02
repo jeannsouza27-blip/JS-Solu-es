@@ -2380,6 +2380,15 @@ footer {
   text-align: center;
 }
 
+/* Em telas menores, os botões flutuantes (chat e voltar ao topo) ficam sobre
+   a última linha do rodapé: reserva a altura deles para o link de privacidade
+   continuar visível e clicável. */
+@media (max-width: 1024px) {
+  footer {
+    padding-bottom: 96px;
+  }
+}
+
 .footer-inner {
   max-width: 1100px;
   margin: 0 auto;
