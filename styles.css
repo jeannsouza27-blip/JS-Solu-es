@@ -2469,6 +2469,11 @@ footer {
   padding-top: 20px;
 }
 
+/* Trecho do rodapé que não deve quebrar no meio (CNPJ, link etc.) */
+.nowrap {
+  white-space: nowrap;
+}
+
 .footer-bottom strong {
   color: var(--text-secondary);
   font-weight: 500;
