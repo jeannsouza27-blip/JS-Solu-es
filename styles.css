@@ -207,6 +207,15 @@ textarea:focus-visible {
   pointer-events: none;
   z-index: 9998;
   transform: translate(-50%, -50%);
+  /* Só aparece depois do primeiro movimento do mouse; antes disso ficaria
+     parado no canto superior esquerdo (0,0). */
+  opacity: 0;
+  transition: opacity 200ms ease;
+}
+
+body.cursor-ready .cursor-dot,
+body.cursor-ready .cursor-outline {
+  opacity: 1;
 }
 
 .cursor-dot {
@@ -219,7 +228,7 @@ textarea:focus-visible {
   width: 32px;
   height: 32px;
   border: 1.5px solid rgba(56, 189, 248, 0.6);
-  transition: scale 0.2s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.2s;
+  transition: scale 0.2s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.2s, opacity 200ms ease;
 }
 
 .cursor-outline.cursor-hover {

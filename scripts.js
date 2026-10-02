@@ -355,6 +355,7 @@ if (window.matchMedia('(pointer: fine)').matches) {
   document.addEventListener('mousemove', (e) => {
     cursorX = e.clientX;
     cursorY = e.clientY;
+    document.body.classList.add('cursor-ready');
     if (cursorFrame) return;
 
     cursorFrame = requestAnimationFrame(() => {
