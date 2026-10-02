@@ -68,7 +68,6 @@ if (cookieAcceptBtn) {
     localStorage.setItem(COOKIE_CONSENT_KEY, 'accepted');
     cookieConsentBanner.hidden = true;
     loadAnalytics();
-    openN8nChat();
   });
 }
 
@@ -101,22 +100,54 @@ window.addEventListener('load', () => {
   }
 });
 
-// ===== ANIMAÇÃO DOS CARDS DE PROJETO AO ENTRAR NA TELA =====
-const cards = document.querySelectorAll('.card');
+// ===== REVELAÇÃO AO ROLAR =====
+// O conteúdo é visível por padrão: sem JS, com CDN bloqueada ou se algo
+// falhar, nada fica escondido. O script só esconde o que ainda está abaixo
+// da dobra no carregamento e revela quando entra na tela. Qualquer elemento
+// que já passou do fim da viewport (rolagem rápida, link âncora, voltar no
+// histórico) é revelado na hora, mesmo que o observer não tenha disparado.
+(function () {
+  const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if (reduceMotion || !('IntersectionObserver' in window)) return;
 
-if ('IntersectionObserver' in window) {
-  cards.forEach(card => card.classList.add('motion-ready'));
+  const targets = document.querySelectorAll('[data-aos], .projects .card');
+  const pending = new Set();
+  const fold = window.innerHeight;
 
-  const cardObserver = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-      if (!entry.isIntersecting) return;
-      entry.target.classList.add('is-visible');
-      cardObserver.unobserve(entry.target);
-    });
-  }, { threshold: 0.15 });
+  const reveal = (el) => {
+    if (!pending.delete(el)) return;
+    observer.unobserve(el);
+    el.classList.remove('reveal-pending');
+    el.classList.add('reveal-in');
+    el.addEventListener('animationend', () => el.classList.remove('reveal-in'), { once: true });
+  };
 
-  cards.forEach(card => cardObserver.observe(card));
-}
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => { if (entry.isIntersecting) reveal(entry.target); });
+  }, { rootMargin: '0px 0px -6% 0px' });
+
+  targets.forEach(el => {
+    if (el.getBoundingClientRect().top < fold) return; // já está na tela: não esconde
+    const delay = Math.min(Number(el.dataset.aosDelay) || 0, 240);
+    if (delay) el.style.setProperty('--reveal-delay', delay + 'ms');
+    el.classList.add('reveal-pending');
+    pending.add(el);
+    observer.observe(el);
+  });
+
+  let ticking = false;
+  const sweep = () => {
+    ticking = false;
+    const bottom = window.innerHeight;
+    pending.forEach(el => { if (el.getBoundingClientRect().top < bottom) reveal(el); });
+    if (!pending.size) window.removeEventListener('scroll', onScroll);
+  };
+  const onScroll = () => {
+    if (!ticking) { ticking = true; requestAnimationFrame(sweep); }
+  };
+  window.addEventListener('scroll', onScroll, { passive: true });
+  window.addEventListener('hashchange', sweep);
+})();
 
 // ===== MENU MOBILE (hambúrguer -> X) =====
 const menuToggle = document.getElementById('menu-toggle');
@@ -160,7 +191,7 @@ function onScroll() {
   const progress = docHeight > 0 ? (scrollTop / docHeight) * 100 : 0;
 
   if (header) header.classList.toggle('scrolled', scrollTop > 10);
-  if (scrollProgress) scrollProgress.style.width = progress + '%';
+  if (scrollProgress) scrollProgress.style.transform = `scaleX(${progress / 100})`;
   if (backToTop) backToTop.classList.toggle('show', scrollTop > 400);
 }
 
@@ -169,7 +200,8 @@ onScroll();
 
 if (backToTop) {
   backToTop.addEventListener('click', () => {
-    window.scrollTo({ top: 0, behavior: 'smooth' });
+    const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    window.scrollTo({ top: 0, behavior: reduce ? 'auto' : 'smooth' });
   });
 }
 
@@ -385,6 +417,24 @@ if (contactForm) {
 // ===== WIDGET DE CHAT COM O AGENTE DE IA (n8n) =====
 const n8nChatContainer = document.getElementById('n8n-chat');
 
+// O @n8n/chat renderiza o título do cabeçalho em <h1>, mas a página deve ter
+// um único H1 (o do hero). Troca por <div>, mantendo classes e atributos
+// (inclusive os data-v-* do Vue, para o CSS da lib continuar valendo).
+function demoteChatHeadings(root) {
+  root.querySelectorAll('h1').forEach(h1 => {
+    const div = document.createElement('div');
+    [...h1.attributes].forEach(attr => div.setAttribute(attr.name, attr.value));
+    div.classList.add('chat-heading-title');
+    div.innerHTML = h1.innerHTML;
+    h1.replaceWith(div);
+  });
+}
+
+if (n8nChatContainer) {
+  new MutationObserver(() => demoteChatHeadings(n8nChatContainer))
+    .observe(n8nChatContainer, { childList: true, subtree: true });
+}
+
 // Import dinâmico (em vez de "import" estático no topo do arquivo): se o
 // CDN do widget falhar, estiver lento ou for bloqueado por um ad-blocker
 // (comum em widgets de chat), isso não pode travar o resto do site —
@@ -419,31 +469,7 @@ if (n8nChatContainer) {
     });
 }
 
-// Abre o widget programaticamente. O @n8n/chat (v1.39) não expõe uma API
-// pública de abrir/fechar — clicamos no botão flutuante que ele mesmo
-// renderiza. Se uma versão futura do pacote mudar essas classes, isso
-// para de funcionar e precisa ser revisto.
-// Como o widget carrega via import dinâmico, o botão pode ainda não
-// existir no instante do clique — tenta de novo por até ~5s antes de
-// desistir (ex: CDN bloqueada por um ad-blocker).
-function openN8nChat(retriesLeft = 25) {
-  const toggle = document.querySelector('#n8n-chat .chat-window-toggle');
-  if (!toggle) {
-    if (retriesLeft > 0) setTimeout(() => openN8nChat(retriesLeft - 1), 200);
-    return;
-  }
-  const panel = document.querySelector('#n8n-chat .chat-window');
-  const isOpen = panel && getComputedStyle(panel).display !== 'none';
-  if (!isOpen) toggle.click();
-}
-
-const openChatCta = document.getElementById('open-chat-cta');
-if (openChatCta) {
-  openChatCta.addEventListener('click', openN8nChat);
-}
-
-// Dispara chat_open tanto no clique direto no toggle quanto no clique
-// programático disparado por openN8nChat() (ambos emitem um evento real).
+// Dispara chat_open quando o visitante abre o widget pelo botão flutuante.
 // Usa a fase de captura para ler o estado ANTES do widget alternar (a
 // atualização do Vue é assíncrona, então checar depois do clique pegaria
 // sempre o estado antigo).
@@ -456,16 +482,6 @@ document.addEventListener('click', (e) => {
 }, true);
 
 // ===== BIBLIOTECAS EXTERNAS (guardas para caso o CDN falhe) =====
-if (typeof AOS !== 'undefined') {
-  AOS.init({
-    duration: 480,
-    easing: 'cubic-bezier(0.16, 1, 0.3, 1)',
-    once: true,
-    offset: 48,
-    disable: window.matchMedia('(prefers-reduced-motion: reduce)').matches
-  });
-}
-
 if (typeof VanillaTilt !== 'undefined') {
   VanillaTilt.init(document.querySelectorAll('[data-tilt]'));
 }
@@ -504,15 +520,34 @@ if (particlesContainer && !prefersReducedMotion && !isMobileViewport) {
 // ===== CONVITE PROATIVO DA ANA (substitui o popup) =====
 (function () {
   const KEY = 'jsAnaTeaserShown';
-  const DELAY_MS = 8000;
+  const DELAY_MS = 20000;
+  const SCROLL_RATIO = 0.5;
   try { if (sessionStorage.getItem(KEY)) return; } catch (e) {}
   function chatIsOpen() {
     const panel = document.querySelector('#n8n-chat .chat-window');
     return panel && getComputedStyle(panel).display !== 'none';
   }
-  const timer = setTimeout(showTeaser, DELAY_MS);
+  // Nunca aparece no carregamento: só depois de 20s na página ou quando o
+  // visitante rolar metade dela, o que acontecer primeiro.
+  let triggered = false;
+  function stopWatching() {
+    triggered = true;
+    clearTimeout(timer);
+    window.removeEventListener('scroll', onScrollDepth);
+  }
+  function trigger() {
+    if (triggered) return;
+    stopWatching();
+    showTeaser();
+  }
+  function onScrollDepth() {
+    const max = document.documentElement.scrollHeight - window.innerHeight;
+    if (max > 0 && window.scrollY / max >= SCROLL_RATIO) trigger();
+  }
+  const timer = setTimeout(trigger, DELAY_MS);
+  window.addEventListener('scroll', onScrollDepth, { passive: true });
   document.addEventListener('click', (e) => {
-    if (e.target.closest('#n8n-chat .chat-window-toggle')) clearTimeout(timer);
+    if (e.target.closest('#n8n-chat .chat-window-toggle')) stopWatching();
   }, true);
   function showTeaser() {
     const toggle = document.querySelector('#n8n-chat .chat-window-toggle');

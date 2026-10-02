@@ -24,6 +24,7 @@
     content="Automatize o atendimento, as vendas e a gestão da sua empresa com Agentes de IA e automações sob medida.">
   <meta name="twitter:image" content="https://jssolucoes.tech/js-solucoes-logo-brand.svg">
 
+  <link rel="canonical" href="https://jssolucoes.tech/">
   <link rel="icon" type="image/svg+xml" href="./js-solucoes-logo-brand.svg">
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -31,13 +32,12 @@
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
     rel="stylesheet">
 
-  <!-- AOS (Animate On Scroll) -->
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/aos@2.3.1/dist/aos.css">
-
   <!-- Widget de chat com o agente de IA (n8n) -->
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@n8n/chat/dist/style.css">
 
-  <link rel="stylesheet" href="./styles.css?v=20260928">
+  <link rel="stylesheet" href="./styles.css?v=20261002">
+  <!-- Sem JavaScript o preloader nunca seria removido: some de imediato -->
+  <noscript><style>#preloader { display: none; }</style></noscript>
 
   <!-- Schema.org — ProfessionalService + Service + FAQ -->
   <script type="application/ld+json">
@@ -156,8 +156,7 @@
     <div id="particles-js"></div>
     <div class="hero-content">
       <p class="hero-label">Automação e Inteligência Artificial para Empresas</p>
-      <h1>Sua empresa atendendo <span class="name-gradient">24h</span>, vendendo mais e gastando menos —
-        com Inteligência Artificial</h1>
+      <h1>Atenda <span class="name-gradient">24h</span>, venda mais e gaste menos com IA</h1>
       <p class="hero-desc">
         Criamos <strong>agentes de IA</strong> e <strong>automações sob medida</strong> que trabalham pela sua
         empresa enquanto você foca no que importa: crescer.
@@ -168,7 +167,6 @@
           target="_blank" rel="noopener" data-origin="hero_cta" data-cta="consultoria">Quero uma Consultoria
           Gratuita</a>
         <a class="btn-secondary" href="#projetos">Ver Nossos Projetos</a>
-        <button type="button" class="btn-secondary" id="open-chat-cta">Converse com nossa IA agora</button>
       </div>
       <!-- TODO JEANN: confirmar números reais (anos de experiência, projetos entregues, empresas atendidas) e ativar removendo data-enabled="false" -->
       <p class="hero-proof" data-enabled="false">— anos de experiência &nbsp;•&nbsp;
@@ -176,7 +174,7 @@
         atendidas</p>
     </div>
     <div class="hero-image">
-      <div class="instrument-panel" aria-label="Painel de instrumentos da operação">
+      <div class="instrument-panel" aria-label="Painel de instrumentos da operação (exemplo ilustrativo)">
         <div class="panel-header">
           <div class="panel-dots">
             <span></span>
@@ -198,6 +196,7 @@
               <strong>+38%</strong>
             </div>
           </div>
+          <p class="panel-note">Exemplo ilustrativo</p>
 
           <div class="signal-module">
             <div class="signal-row">
@@ -242,12 +241,12 @@
     <div class="section-container">
       <p class="tech-bar-label" data-aos="fade-up">Tecnologias e parceiros que usamos</p>
       <div class="tech-bar" data-aos="fade-up" data-aos-delay="80">
-        <span class="tech-badge"><span class="skill-icon">🔗</span>n8n</span>
-        <span class="tech-badge"><span class="skill-icon">🧠</span>IA Generativa</span>
-        <span class="tech-badge"><span class="skill-icon">💬</span>WhatsApp Business</span>
-        <span class="tech-badge"><span class="skill-icon">📘</span>Meta</span>
-        <span class="tech-badge"><span class="skill-icon">🔍</span>Google</span>
-        <span class="tech-badge"><span class="skill-icon">⚙️</span>Node.js</span>
+        <span class="tech-badge"><svg class="tech-logo" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" focusable="false"><path d="M21.4737 5.6842c-1.1772 0-2.1663.8051-2.4468 1.8947h-2.8955c-1.235 0-2.289.893-2.492 2.111l-.1038.623a1.263 1.263 0 0 1-1.246 1.0555H11.289c-.2805-1.0896-1.2696-1.8947-2.4468-1.8947s-2.1663.8051-2.4467 1.8947H4.973c-.2805-1.0896-1.2696-1.8947-2.4468-1.8947C1.1311 9.4737 0 10.6047 0 12s1.131 2.5263 2.5263 2.5263c1.1772 0 2.1663-.8051 2.4468-1.8947h1.4223c.2804 1.0896 1.2696 1.8947 2.4467 1.8947 1.1772 0 2.1663-.8051 2.4468-1.8947h1.0008a1.263 1.263 0 0 1 1.2459 1.0555l.1038.623c.203 1.218 1.257 2.111 2.492 2.111h.3692c.2804 1.0895 1.2696 1.8947 2.4468 1.8947 1.3952 0 2.5263-1.131 2.5263-2.5263s-1.131-2.5263-2.5263-2.5263c-1.1772 0-2.1664.805-2.4468 1.8947h-.3692a1.263 1.263 0 0 1-1.246-1.0555l-.1037-.623A2.52 2.52 0 0 0 13.9607 12a2.52 2.52 0 0 0 .821-1.4794l.1038-.623a1.263 1.263 0 0 1 1.2459-1.0555h2.8955c.2805 1.0896 1.2696 1.8947 2.4468 1.8947 1.3952 0 2.5263-1.131 2.5263-2.5263s-1.131-2.5263-2.5263-2.5263m0 1.2632a1.263 1.263 0 0 1 1.2631 1.2631 1.263 1.263 0 0 1-1.2631 1.2632 1.263 1.263 0 0 1-1.2632-1.2632 1.263 1.263 0 0 1 1.2632-1.2631M2.5263 10.7368A1.263 1.263 0 0 1 3.7895 12a1.263 1.263 0 0 1-1.2632 1.2632A1.263 1.263 0 0 1 1.2632 12a1.263 1.263 0 0 1 1.2631-1.2632m6.3158 0A1.263 1.263 0 0 1 10.1053 12a1.263 1.263 0 0 1-1.2632 1.2632A1.263 1.263 0 0 1 7.579 12a1.263 1.263 0 0 1 1.2632-1.2632m10.1053 3.7895a1.263 1.263 0 0 1 1.2631 1.2632 1.263 1.263 0 0 1-1.2631 1.2631 1.263 1.263 0 0 1-1.2632-1.2631 1.263 1.263 0 0 1 1.2632-1.2632"/></svg>n8n</span>
+        <span class="tech-badge"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M9.937 15.5A2 2 0 0 0 8.5 14.063l-6.135-1.582a.5.5 0 0 1 0-.962L8.5 9.936A2 2 0 0 0 9.937 8.5l1.582-6.135a.5.5 0 0 1 .963 0L14.063 8.5A2 2 0 0 0 15.5 9.937l6.135 1.581a.5.5 0 0 1 0 .964L15.5 14.063a2 2 0 0 0-1.437 1.437l-1.582 6.135a.5.5 0 0 1-.963 0z"/><path d="M20 3v4"/><path d="M22 5h-4"/><path d="M4 17v2"/><path d="M5 18H3"/></svg>IA Generativa</span>
+        <span class="tech-badge"><svg class="tech-logo" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" focusable="false"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></svg>WhatsApp Business</span>
+        <span class="tech-badge"><svg class="tech-logo" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" focusable="false"><path d="M6.915 4.03c-1.968 0-3.683 1.28-4.871 3.113C.704 9.208 0 11.883 0 14.449c0 .706.07 1.369.21 1.973a6.624 6.624 0 0 0 .265.86 5.297 5.297 0 0 0 .371.761c.696 1.159 1.818 1.927 3.593 1.927 1.497 0 2.633-.671 3.965-2.444.76-1.012 1.144-1.626 2.663-4.32l.756-1.339.186-.325c.061.1.121.196.183.3l2.152 3.595c.724 1.21 1.665 2.556 2.47 3.314 1.046.987 1.992 1.22 3.06 1.22 1.075 0 1.876-.355 2.455-.843a3.743 3.743 0 0 0 .81-.973c.542-.939.861-2.127.861-3.745 0-2.72-.681-5.357-2.084-7.45-1.282-1.912-2.957-2.93-4.716-2.93-1.047 0-2.088.467-3.053 1.308-.652.57-1.257 1.29-1.82 2.05-.69-.875-1.335-1.547-1.958-2.056-1.182-.966-2.315-1.303-3.454-1.303zm10.16 2.053c1.147 0 2.188.758 2.992 1.999 1.132 1.748 1.647 4.195 1.647 6.4 0 1.548-.368 2.9-1.839 2.9-.58 0-1.027-.23-1.664-1.004-.496-.601-1.343-1.878-2.832-4.358l-.617-1.028a44.908 44.908 0 0 0-1.255-1.98c.07-.109.141-.224.211-.327 1.12-1.667 2.118-2.602 3.358-2.602zm-10.201.553c1.265 0 2.058.791 2.675 1.446.307.327.737.871 1.234 1.579l-1.02 1.566c-.757 1.163-1.882 3.017-2.837 4.338-1.191 1.649-1.81 1.817-2.486 1.817-.524 0-1.038-.237-1.383-.794-.263-.426-.464-1.13-.464-2.046 0-2.221.63-4.535 1.66-6.088.454-.687.964-1.226 1.533-1.533a2.264 2.264 0 0 1 1.088-.285z"/></svg>Meta</span>
+        <span class="tech-badge"><svg class="tech-logo" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" focusable="false"><path d="M12.48 10.92v3.28h7.84c-.24 1.84-.853 3.187-1.787 4.133-1.147 1.147-2.933 2.4-6.053 2.4-4.827 0-8.6-3.893-8.6-8.72s3.773-8.72 8.6-8.72c2.6 0 4.507 1.027 5.907 2.347l2.307-2.307C18.747 1.44 16.133 0 12.48 0 5.867 0 .307 5.387.307 12s5.56 12 12.173 12c3.573 0 6.267-1.173 8.373-3.36 2.16-2.16 2.84-5.213 2.84-7.667 0-.76-.053-1.467-.173-2.053H12.48z"/></svg>Google</span>
+        <span class="tech-badge"><svg class="tech-logo" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" focusable="false"><path d="M11.998,24c-0.321,0-0.641-0.084-0.922-0.247l-2.936-1.737c-0.438-0.245-0.224-0.332-0.08-0.383 c0.585-0.203,0.703-0.25,1.328-0.604c0.065-0.037,0.151-0.023,0.218,0.017l2.256,1.339c0.082,0.045,0.197,0.045,0.272,0l8.795-5.076 c0.082-0.047,0.134-0.141,0.134-0.238V6.921c0-0.099-0.053-0.192-0.137-0.242l-8.791-5.072c-0.081-0.047-0.189-0.047-0.271,0 L3.075,6.68C2.99,6.729,2.936,6.825,2.936,6.921v10.15c0,0.097,0.054,0.189,0.139,0.235l2.409,1.392 c1.307,0.654,2.108-0.116,2.108-0.89V7.787c0-0.142,0.114-0.253,0.256-0.253h1.115c0.139,0,0.255,0.112,0.255,0.253v10.021 c0,1.745-0.95,2.745-2.604,2.745c-0.508,0-0.909,0-2.026-0.551L2.28,18.675c-0.57-0.329-0.922-0.945-0.922-1.604V6.921 c0-0.659,0.353-1.275,0.922-1.603l8.795-5.082c0.557-0.315,1.296-0.315,1.848,0l8.794,5.082c0.57,0.329,0.924,0.944,0.924,1.603 v10.15c0,0.659-0.354,1.273-0.924,1.604l-8.794,5.078C12.643,23.916,12.324,24,11.998,24z M19.099,13.993 c0-1.9-1.284-2.406-3.987-2.763c-2.731-0.361-3.009-0.548-3.009-1.187c0-0.528,0.235-1.233,2.258-1.233 c1.807,0,2.473,0.389,2.747,1.607c0.024,0.115,0.129,0.199,0.247,0.199h1.141c0.071,0,0.138-0.031,0.186-0.081 c0.048-0.054,0.074-0.123,0.067-0.196c-0.177-2.098-1.571-3.076-4.388-3.076c-2.508,0-4.004,1.058-4.004,2.833 c0,1.925,1.488,2.457,3.895,2.695c2.88,0.282,3.103,0.703,3.103,1.269c0,0.983-0.789,1.402-2.642,1.402 c-2.327,0-2.839-0.584-3.011-1.742c-0.02-0.124-0.126-0.215-0.253-0.215h-1.137c-0.141,0-0.254,0.112-0.254,0.253 c0,1.482,0.806,3.248,4.655,3.248C17.501,17.007,19.099,15.91,19.099,13.993z"/></svg>Node.js</span>
       </div>
     </div>
   </section>
@@ -257,27 +256,27 @@
       <h2 data-aos="fade-up">Sua empresa enfrenta algum desses desafios?</h2>
       <div class="desafios-grid">
         <div class="desafio-card" data-aos="fade-up" data-aos-delay="0">
-          <span class="desafio-icon">📞</span>
+          <span class="desafio-icon"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg></span>
           <p>Equipe sobrecarregada com atendimento repetitivo</p>
         </div>
         <div class="desafio-card" data-aos="fade-up" data-aos-delay="80">
-          <span class="desafio-icon">⏱️</span>
+          <span class="desafio-icon"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><line x1="10" x2="14" y1="2" y2="2"/><line x1="12" x2="15" y1="14" y2="11"/><circle cx="12" cy="14" r="8"/></svg></span>
           <p>Leads que chegam e ninguém responde a tempo</p>
         </div>
         <div class="desafio-card" data-aos="fade-up" data-aos-delay="160">
-          <span class="desafio-icon">📋</span>
+          <span class="desafio-icon"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><rect width="8" height="4" x="8" y="2" rx="1" ry="1"/><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/><path d="M12 11h4"/><path d="M12 16h4"/><path d="M8 11h.01"/><path d="M8 16h.01"/></svg></span>
           <p>Processos manuais que consomem tempo e geram erros</p>
         </div>
         <div class="desafio-card" data-aos="fade-up" data-aos-delay="0">
-          <span class="desafio-icon">🗓️</span>
+          <span class="desafio-icon"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M8 2v4"/><path d="M16 2v4"/><rect width="18" height="18" x="3" y="4" rx="2"/><path d="M3 10h18"/><path d="M8 14h.01"/><path d="M12 14h.01"/><path d="M16 14h.01"/><path d="M8 18h.01"/><path d="M12 18h.01"/><path d="M16 18h.01"/></svg></span>
           <p>Falta de controle sobre agendamentos, financeiro ou estoque</p>
         </div>
         <div class="desafio-card" data-aos="fade-up" data-aos-delay="80">
-          <span class="desafio-icon">🔁</span>
+          <span class="desafio-icon"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="m17 2 4 4-4 4"/><path d="M3 11v-1a4 4 0 0 1 4-4h14"/><path d="m7 22-4-4 4-4"/><path d="M21 13v1a4 4 0 0 1-4 4H3"/></svg></span>
           <p>Dificuldade em fidelizar clientes e manter recorrência</p>
         </div>
         <div class="desafio-card" data-aos="fade-up" data-aos-delay="160">
-          <span class="desafio-icon">🌐</span>
+          <span class="desafio-icon"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><circle cx="12" cy="12" r="10"/><path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20"/><path d="M2 12h20"/></svg></span>
           <p>Site desatualizado que não gera contatos nem vendas</p>
         </div>
       </div>
@@ -298,7 +297,7 @@
       <div class="servicos-grid">
         <div class="servico-card" data-aos="fade-up" data-aos-delay="0">
           <span class="servico-tag">Mais vendido</span>
-          <div class="empresa-icon">🤖</div>
+          <div class="empresa-icon"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M12 8V4H8"/><rect width="16" height="12" x="4" y="8" rx="2"/><path d="M2 14h2"/><path d="M20 14h2"/><path d="M15 13v2"/><path d="M9 13v2"/></svg></div>
           <h3>Agentes de IA</h3>
           <p>Agentes inteligentes que atendem, vendem e qualificam leads 24 horas por dia.</p>
           <ul class="servico-list">
@@ -313,7 +312,7 @@
         </div>
 
         <div class="servico-card" data-aos="fade-up" data-aos-delay="100">
-          <div class="empresa-icon">⚙️</div>
+          <div class="empresa-icon"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><rect width="8" height="8" x="3" y="3" rx="2"/><path d="M7 11v4a2 2 0 0 0 2 2h4"/><rect width="8" height="8" x="13" y="13" rx="2"/></svg></div>
           <h3>Automação de Processos</h3>
           <p>Automações que eliminam tarefas manuais e conectam seus sistemas.</p>
           <ul class="servico-list">
@@ -328,7 +327,7 @@
         </div>
 
         <div class="servico-card servico-card--secundario" data-aos="fade-up" data-aos-delay="200">
-          <div class="empresa-icon">💻</div>
+          <div class="empresa-icon"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><rect width="7" height="9" x="3" y="3" rx="1"/><rect width="7" height="5" x="14" y="3" rx="1"/><rect width="7" height="9" x="14" y="12" rx="1"/><rect width="7" height="5" x="3" y="16" rx="1"/></svg></div>
           <h3>Sistemas CRM e SaaS</h3>
           <p>Plataformas de gestão sob medida para o seu tipo de negócio.</p>
           <ul class="servico-list">
@@ -343,7 +342,7 @@
         </div>
 
         <div class="servico-card servico-card--secundario" data-aos="fade-up" data-aos-delay="300">
-          <div class="empresa-icon">🌐</div>
+          <div class="empresa-icon"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="m18 16 4-4-4-4"/><path d="m6 8-4 4 4 4"/><path d="m14.5 4-5 16"/></svg></div>
           <h3>Desenvolvimento Web</h3>
           <p>Sites e sistemas modernos que geram resultado.</p>
           <ul class="servico-list">
@@ -398,33 +397,46 @@
       <p class="section-subtitle" data-aos="fade-up">Alguns dos projetos que já colocamos em prática</p>
 
       <div class="resultados-grid">
-        <div class="resultado-card" data-aos="fade-up">
-          <span class="card-tag">SaaS &middot; Barbearia</span>
-          <h3>The Carvalhos</h3>
-          <div class="resultado-block">
-            <strong>Problema</strong>
-            <p>Agendamentos por telefone geravam fila, confusão de horários e cancelamentos sem aviso.</p>
+        <article class="resultado-card resultado-card--destaque" data-aos="fade-up">
+          <div class="case-info">
+            <span class="card-tag">SaaS &middot; Barbearia</span>
+            <h3>The Carvalhos</h3>
+            <div class="resultado-block">
+              <strong>Problema</strong>
+              <p>Agendamentos por telefone geravam fila, confusão de horários e cancelamentos sem aviso.</p>
+            </div>
+            <div class="resultado-block">
+              <strong>Solução</strong>
+              <p>Sistema SaaS de agendamento online, com cobrança automática via WhatsApp e dashboard financeiro em
+                tempo real.</p>
+            </div>
+            <!-- TODO JEANN: preencher com um resultado real e verificável do The Carvalhos -->
+            <div class="case-highlight">
+              <span class="case-highlight-value">[RESULTADO]</span>
+              <span class="case-highlight-label">[DESCRIÇÃO DO RESULTADO]</span>
+            </div>
+            <div class="resultado-numbers">
+              <div><span>+60%</span>agendamentos online</div>
+              <div><span>-30%</span>no-shows</div>
+              <div><span>100%</span>controle financeiro em tempo real</div>
+            </div>
+            <div class="card-techs">
+              <span class="tech-node">Node.js</span>
+              <span class="tech-db">SQLite</span>
+              <span class="tech-automation">n8n</span>
+              <span class="tech-api">WhatsApp API</span>
+            </div>
+            <!-- TODO JEANN: migrar para domínio final do projeto (ex: https://carvalhos.jssolucoes.tech) quando estiver pronto -->
+            <a href="https://carvalhos-carvalhos.w49ep4.easypanel.host/" target="_blank" rel="noopener"
+              class="card-link">Ver projeto →</a>
           </div>
-          <div class="resultado-block">
-            <strong>Solução</strong>
-            <p>Sistema SaaS de agendamento online, com cobrança automática via WhatsApp e dashboard financeiro em
-              tempo real.</p>
-          </div>
-          <div class="resultado-numbers">
-            <div><span>+60%</span>agendamentos online</div>
-            <div><span>-30%</span>no-shows</div>
-            <div><span>100%</span>controle financeiro em tempo real</div>
-          </div>
-          <div class="card-techs">
-            <span class="tech-node">Node.js</span>
-            <span class="tech-db">SQLite</span>
-            <span class="tech-automation">n8n</span>
-            <span class="tech-api">WhatsApp API</span>
-          </div>
-          <!-- TODO JEANN: migrar para domínio final do projeto (ex: https://carvalhos.jssolucoes.tech) quando estiver pronto -->
-          <a href="https://carvalhos-carvalhos.w49ep4.easypanel.host/" target="_blank" rel="noopener"
-            class="card-link">Ver projeto →</a>
-        </div>
+          <figure class="case-media">
+            <!-- TODO JEANN: trocar o marcador abaixo por um print real do sistema (ideal 1600x1000, .webp):
+            <img src="./caminho-do-print.webp" alt="Painel do sistema The Carvalhos" width="1600" height="1000" loading="lazy">
+            -->
+            <div class="case-media-placeholder">[PRINT DO SISTEMA]</div>
+          </figure>
+        </article>
 
         <!-- Modelo de card de case — duplique esta estrutura para cada novo case real:
         <div class="resultado-card" data-aos="fade-up">
@@ -451,37 +463,7 @@
         </div>
         -->
 
-        <div class="resultado-card resultado-placeholder" data-aos="fade-up" data-aos-delay="120">
-          <span class="card-tag">Próximo case</span>
-          <h3>O próximo case de sucesso pode ser da sua empresa</h3>
-          <p>Estamos sempre construindo novos projetos. Que tal começar o diagnóstico gratuito e ver sua empresa
-            automatizada em breve?</p>
-          <a class="card-link"
-            href="https://wa.me/5527997948088?text=Ol%C3%A1!%20Quero%20come%C3%A7ar%20o%20diagn%C3%B3stico%20gratuito%20da%20minha%20empresa."
-            target="_blank" rel="noopener" data-origin="resultados_proximo_case">Quero ser o próximo case →</a>
-        </div>
       </div>
-    </div>
-  </section>
-
-  <!-- TODO JEANN: adicionar depoimentos reais de clientes (nome, empresa, texto e foto opcional) e depois remover data-enabled="false" abaixo para publicar a seção -->
-  <section id="depoimentos" data-enabled="false">
-    <div class="section-container">
-      <h2 data-aos="fade-up">O que nossos clientes dizem</h2>
-      <div class="depoimentos-grid" data-aos="fade-up">
-        <!-- Modelo de card — duplique para cada depoimento real:
-        <div class="depoimento-card">
-          <span class="quote-icon">"</span>
-          <img src="./caminho-da-foto.jpg" alt="Nome do Cliente" class="depoimento-foto" loading="lazy">
-          <p class="depoimento-texto">Texto do depoimento do cliente aqui.</p>
-          <p class="depoimento-autor">Nome do Cliente</p>
-          <p class="depoimento-empresa">Empresa / Cargo</p>
-        </div>
-        -->
-      </div>
-      <p class="depoimentos-cta-text" data-aos="fade-up">É nosso cliente e quer deixar um depoimento? <a
-          href="https://wa.me/5527997948088?text=Ol%C3%A1!%20Sou%20cliente%20da%20JS%20Solu%C3%A7%C3%B5es%20e%20quero%20deixar%20um%20depoimento."
-          target="_blank" rel="noopener" data-origin="depoimentos">Fale conosco no WhatsApp</a>.</p>
     </div>
   </section>
 
@@ -501,7 +483,7 @@
 
         <div class="card destaque" data-category="ia">
           <div class="card-thumb thumb-ia">
-            <span class="thumb-icon">🤖</span>
+            <span class="thumb-icon"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M12 8V4H8"/><rect width="16" height="12" x="4" y="8" rx="2"/><path d="M2 14h2"/><path d="M20 14h2"/><path d="M15 13v2"/><path d="M9 13v2"/></svg></span>
             <div class="card-thumb-overlay"><span>Ver projeto →</span></div>
           </div>
           <span class="card-tag">Inteligência Artificial</span>
@@ -518,7 +500,7 @@
 
         <div class="card" data-category="automacao">
           <div class="card-thumb thumb-ia">
-            <span class="thumb-icon">💬</span>
+            <span class="thumb-icon"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/><path d="M13 8H7"/><path d="M17 12H7"/></svg></span>
             <div class="card-thumb-overlay"><span>Ver demo →</span></div>
             <!-- TODO JEANN: vídeo/print da demo. Quando tiver a mídia, substitua o bloco acima por:
             <video autoplay muted loop playsinline preload="none" poster="./caminho-poster.jpg">
@@ -540,7 +522,7 @@
 
         <div class="card" data-category="automacao">
           <div class="card-thumb thumb-ia">
-            <span class="thumb-icon">📈</span>
+            <span class="thumb-icon"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><polyline points="22 7 13.5 15.5 8.5 10.5 2 17"/><polyline points="16 7 22 7 22 13"/></svg></span>
             <div class="card-thumb-overlay"><span>Ver demo →</span></div>
             <!-- TODO JEANN: vídeo/print da demo. Quando tiver a mídia, substitua o bloco acima por:
             <video autoplay muted loop playsinline preload="none" poster="./caminho-poster.jpg">
@@ -562,7 +544,7 @@
 
         <div class="card" data-category="automacao">
           <div class="card-thumb thumb-ia">
-            <span class="thumb-icon">💳</span>
+            <span class="thumb-icon"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><rect width="20" height="14" x="2" y="5" rx="2"/><line x1="2" x2="22" y1="10" y2="10"/></svg></span>
             <div class="card-thumb-overlay"><span>Ver demo →</span></div>
             <!-- TODO JEANN: vídeo/print da demo. Quando tiver a mídia, substitua o bloco acima por:
             <video autoplay muted loop playsinline preload="none" poster="./caminho-poster.jpg">
@@ -583,7 +565,7 @@
 
         <div class="card" data-category="saas">
           <div class="card-thumb thumb-saas">
-            <span class="thumb-icon">💈</span>
+            <span class="thumb-icon"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><circle cx="6" cy="6" r="3"/><path d="M8.12 8.12 12 12"/><path d="M20 4 8.12 15.88"/><circle cx="6" cy="18" r="3"/><path d="M14.8 14.8 20 20"/></svg></span>
             <div class="card-thumb-overlay"><span>Ver projeto →</span></div>
           </div>
           <span class="card-tag">SaaS</span>
@@ -637,13 +619,13 @@
       <div class="skills-area" data-aos="fade-up" data-aos-delay="200">
         <h3>Competências</h3>
         <div class="skills-grid">
-          <span class="skill-badge"><span class="skill-icon">🤖</span>Agentes de IA personalizados</span>
-          <span class="skill-badge"><span class="skill-icon">🔗</span>Automações com n8n</span>
-          <span class="skill-badge"><span class="skill-icon">💬</span>Integração com WhatsApp Business</span>
-          <span class="skill-badge"><span class="skill-icon">🧠</span>IA Generativa aplicada a negócios</span>
-          <span class="skill-badge"><span class="skill-icon">📊</span>Sistemas CRM sob medida</span>
-          <span class="skill-badge"><span class="skill-icon">🌐</span>Desenvolvimento Web</span>
-          <span class="skill-badge"><span class="skill-icon">🛠️</span>Suporte técnico e infraestrutura</span>
+          <span class="skill-badge"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M12 8V4H8"/><rect width="16" height="12" x="4" y="8" rx="2"/><path d="M2 14h2"/><path d="M20 14h2"/><path d="M15 13v2"/><path d="M9 13v2"/></svg>Agentes de IA personalizados</span>
+          <span class="skill-badge"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><rect width="8" height="8" x="3" y="3" rx="2"/><path d="M7 11v4a2 2 0 0 0 2 2h4"/><rect width="8" height="8" x="13" y="13" rx="2"/></svg>Automações com n8n</span>
+          <span class="skill-badge"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M7.9 20A9 9 0 1 0 4 16.1L2 22Z"/></svg>Integração com WhatsApp Business</span>
+          <span class="skill-badge"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M9.937 15.5A2 2 0 0 0 8.5 14.063l-6.135-1.582a.5.5 0 0 1 0-.962L8.5 9.936A2 2 0 0 0 9.937 8.5l1.582-6.135a.5.5 0 0 1 .963 0L14.063 8.5A2 2 0 0 0 15.5 9.937l6.135 1.581a.5.5 0 0 1 0 .964L15.5 14.063a2 2 0 0 0-1.437 1.437l-1.582 6.135a.5.5 0 0 1-.963 0z"/><path d="M20 3v4"/><path d="M22 5h-4"/><path d="M4 17v2"/><path d="M5 18H3"/></svg>IA Generativa aplicada a negócios</span>
+          <span class="skill-badge"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M3 3v16a2 2 0 0 0 2 2h16"/><path d="M18 17V9"/><path d="M13 17V5"/><path d="M8 17v-3"/></svg>Sistemas CRM sob medida</span>
+          <span class="skill-badge"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="m18 16 4-4-4-4"/><path d="m6 8-4 4 4 4"/><path d="m14.5 4-5 16"/></svg>Desenvolvimento Web</span>
+          <span class="skill-badge"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg>Suporte técnico e infraestrutura</span>
         </div>
       </div>
     </div>
@@ -656,72 +638,86 @@
         <div class="faq-item">
           <button class="faq-question" aria-expanded="false">
             <span>Quanto custa um agente de IA para minha empresa?</span>
-            <span class="faq-icon">+</span>
+            <span class="faq-icon"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M5 12h14"/><path d="M12 5v14"/></svg></span>
           </button>
           <div class="faq-answer">
-            <p>O investimento varia conforme a complexidade da automação e os sistemas que serão integrados. Fazemos
-              um diagnóstico gratuito para entender sua necessidade e apresentar uma proposta com valores claros, sem
-              surpresas.</p>
+            <div class="faq-answer-inner">
+              <p>O investimento varia conforme a complexidade da automação e os sistemas que serão integrados. Fazemos
+                um diagnóstico gratuito para entender sua necessidade e apresentar uma proposta com valores claros, sem
+                surpresas.</p>
+            </div>
           </div>
         </div>
         <div class="faq-item">
           <button class="faq-question" aria-expanded="false">
             <span>Em quanto tempo fica pronto?</span>
-            <span class="faq-icon">+</span>
+            <span class="faq-icon"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M5 12h14"/><path d="M12 5v14"/></svg></span>
           </button>
           <div class="faq-answer">
-            <p>Projetos simples ficam prontos em poucos dias. Soluções mais completas, como sistemas de agendamento
-              ou CRMs personalizados, costumam levar de 2 a 6 semanas, dependendo do escopo.</p>
+            <div class="faq-answer-inner">
+              <p>Projetos simples ficam prontos em poucos dias. Soluções mais completas, como sistemas de agendamento
+                ou CRMs personalizados, costumam levar de 2 a 6 semanas, dependendo do escopo.</p>
+            </div>
           </div>
         </div>
         <div class="faq-item">
           <button class="faq-question" aria-expanded="false">
             <span>Preciso entender de tecnologia para usar?</span>
-            <span class="faq-icon">+</span>
+            <span class="faq-icon"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M5 12h14"/><path d="M12 5v14"/></svg></span>
           </button>
           <div class="faq-answer">
-            <p>Não. Desenvolvemos tudo pensando na sua rotina, com interfaces simples e treinamento incluído. Você só
-              precisa saber operar o WhatsApp e seu computador ou celular.</p>
+            <div class="faq-answer-inner">
+              <p>Não. Desenvolvemos tudo pensando na sua rotina, com interfaces simples e treinamento incluído. Você só
+                precisa saber operar o WhatsApp e seu computador ou celular.</p>
+            </div>
           </div>
         </div>
         <div class="faq-item">
           <button class="faq-question" aria-expanded="false">
             <span>Funciona no WhatsApp da minha empresa?</span>
-            <span class="faq-icon">+</span>
+            <span class="faq-icon"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M5 12h14"/><path d="M12 5v14"/></svg></span>
           </button>
           <div class="faq-answer">
-            <p>Sim. Integramos diretamente com o WhatsApp Business da sua empresa, mantendo o número que seus
-              clientes já conhecem.</p>
+            <div class="faq-answer-inner">
+              <p>Sim. Integramos diretamente com o WhatsApp Business da sua empresa, mantendo o número que seus
+                clientes já conhecem.</p>
+            </div>
           </div>
         </div>
         <div class="faq-item">
           <button class="faq-question" aria-expanded="false">
             <span>Vocês dão suporte depois da entrega?</span>
-            <span class="faq-icon">+</span>
+            <span class="faq-icon"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M5 12h14"/><path d="M12 5v14"/></svg></span>
           </button>
           <div class="faq-answer">
-            <p>Sim. Todo projeto inclui um período de suporte pós-entrega, e oferecemos planos de manutenção
-              contínua para quem quer evoluir a solução com o tempo.</p>
+            <div class="faq-answer-inner">
+              <p>Sim. Todo projeto inclui um período de suporte pós-entrega, e oferecemos planos de manutenção
+                contínua para quem quer evoluir a solução com o tempo.</p>
+            </div>
           </div>
         </div>
         <div class="faq-item">
           <button class="faq-question" aria-expanded="false">
             <span>Posso testar antes de contratar?</span>
-            <span class="faq-icon">+</span>
+            <span class="faq-icon"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M5 12h14"/><path d="M12 5v14"/></svg></span>
           </button>
           <div class="faq-answer">
-            <p>Sim. No diagnóstico gratuito, mostramos exemplos práticos e, dependendo do projeto, apresentamos uma
-              demonstração funcional antes de fechar negócio.</p>
+            <div class="faq-answer-inner">
+              <p>Sim. No diagnóstico gratuito, mostramos exemplos práticos e, dependendo do projeto, apresentamos uma
+                demonstração funcional antes de fechar negócio.</p>
+            </div>
           </div>
         </div>
         <div class="faq-item">
           <button class="faq-question" aria-expanded="false">
             <span>Atendem empresas de qualquer segmento?</span>
-            <span class="faq-icon">+</span>
+            <span class="faq-icon"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M5 12h14"/><path d="M12 5v14"/></svg></span>
           </button>
           <div class="faq-answer">
-            <p>Atendemos negócios de diversos segmentos — comércio, serviços, saúde, beleza, educação e mais. Cada
-              solução é adaptada à realidade do seu setor.</p>
+            <div class="faq-answer-inner">
+              <p>Atendemos negócios de diversos segmentos — comércio, serviços, saúde, beleza, educação e mais. Cada
+                solução é adaptada à realidade do seu setor.</p>
+            </div>
           </div>
         </div>
       </div>
@@ -842,7 +838,7 @@
 
   <!-- Ações flutuantes -->
   <div class="floating-actions">
-    <button id="back-to-top" aria-label="Voltar ao topo">↑</button>
+    <button id="back-to-top" aria-label="Voltar ao topo"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="m5 12 7-7 7 7"/><path d="M12 19V5"/></svg></button>
   </div>
 
   <!-- Widget de chat com o agente de IA (n8n) -->
@@ -858,10 +854,9 @@
     </div>
   </div>
 
-  <!-- CDNs: scroll-reveal e tilt 3D (partículas são carregadas sob demanda em scripts.js) -->
-  <script src="https://cdn.jsdelivr.net/npm/aos@2.3.1/dist/aos.js" defer></script>
+  <!-- CDN: tilt 3D (partículas são carregadas sob demanda em scripts.js) -->
   <script src="https://cdn.jsdelivr.net/npm/vanilla-tilt@1.7.0/dist/vanilla-tilt.min.js" defer></script>
-  <script src="./scripts.js?v=20260928" defer></script>
+  <script src="./scripts.js?v=20261002" defer></script>
 </body>
 
 </html>
